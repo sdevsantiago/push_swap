@@ -1,0 +1,37 @@
+{
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: cc compilar archivo activo",
+			"command": "/usr/bin/cc",
+			"args": [
+				"-fdiagnostics-color=always",
+				// "-g",
+				"-Wall",
+				"-Wextra",
+				"-Werror",
+				"${workspaceFolder}/src/push_swap/*.c",
+				"${workspaceFolder}/src/push_swap/algorithms/*.c",
+				"${workspaceFolder}/src/push_swap/operations/*.c",
+				"${workspaceFolder}/src/push_swap/utils/*.c",
+				"${workspaceFolder}/lib/Libft/ft_cdlstadd_front.c",
+				"${workspaceFolder}/lib/Libft/libft.a",
+				"${workspaceFolder}/lib/ft_printf/libftprintf.a",
+				"-o",
+				"${workspaceFolder}/a.out",
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "Tarea generada por el depurador."
+		}
+	],
+	"version": "2.0.0"
+}

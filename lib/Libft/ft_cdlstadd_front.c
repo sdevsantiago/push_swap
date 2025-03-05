@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 19:15:58 by sede-san          #+#    #+#             */
-/*   Updated: 2025/02/23 18:56:06 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:46:27 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_cdlstadd_front(t_cdlist **lst, t_cdlist *new)
 	}
 	new->next = *lst;
 	new->previous = ft_cdlstlast(*lst);
-	(*lst)->previous = new;
 	ft_cdlstlast(*lst)->next = new;
+	(*lst)->previous = new;
 	*lst = new;
 }

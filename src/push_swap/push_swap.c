@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:23:37 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/04 10:10:36 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:38:17 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char const *argv[])
 	stack_b = NULL;
 	push_swap(&stack_a, &stack_b);
 	ft_cdlstclear(&stack_a, free);
-	ft_cdlstclear(&stack_b, NULL);
+	ft_cdlstclear(&stack_b, free);
 	return (EXIT_SUCCESS);
 }
 

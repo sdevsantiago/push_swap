@@ -6,12 +6,13 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:55:36 by sede-san          #+#    #+#             */
-/*   Updated: 2025/02/25 19:51:11 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:14:03 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/push_swap.h"
 
+static void		_updateindexes(t_cdlist **stack);
 static t_cdlist	*_getlowest(t_cdlist **stack_a);
 
 /**
@@ -43,6 +44,7 @@ void	ps_foursort(t_cdlist **stack_a, t_cdlist **stack_b)
 	if (ps_issorted(stack_a) == ORDER_ASCENDING)
 		return ;
 	pb(stack_a, stack_b);
+	_updateindexes(stack_a);
 	ps_threesort(stack_a);
 	pa(stack_b, stack_a);
 }
@@ -71,4 +73,24 @@ static t_cdlist	*_getlowest(t_cdlist **stack_a)
 			break ;
 	}
 	return (lowest);
+}
+
+/**
+ * @brief Updates the indexes of `stack`.
+ * @param stack The stack to update
+ */
+static void	_updateindexes(t_cdlist	**stack)
+{
+	t_cdlist	*current;
+	size_t		i;
+
+	current = *stack;
+	i = 0;
+	while (current)
+	{
+		ps_data(current)->index = i++;
+		current = current->next;
+		if (current == *stack)
+			break ;
+	}
 }

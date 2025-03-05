@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:03:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/02/25 15:41:45 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:35:53 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,24 @@
  */
 static void	_push(t_cdlist **stack_src, t_cdlist **stack_dest)
 {
-	t_cdlist	*move;
+	t_cdlist	*first_node_src;
+	t_cdlist	*second_node_src;
+	t_cdlist	*last_node_src;
 
 	if (!stack_src || !*stack_src)
 		return ;
-	move = *stack_src;
-	if ((*stack_src)->next == move)
+	first_node_src = *stack_src;
+	second_node_src = first_node_src->next;
+	if (second_node_src == first_node_src)
 		*stack_src = NULL;
 	else
 	{
-		(*stack_src)->next->previous = ft_cdlstlast(*stack_src);
-		ft_cdlstlast(*stack_src)->next = move->next;
-		*stack_src = (*stack_src)->next;
+		last_node_src = ft_cdlstlast(*stack_src);
+		second_node_src->previous = last_node_src;
+		last_node_src->next = second_node_src;
+		*stack_src = second_node_src;
 	}
-    ft_cdlstadd_front(stack_dest, move);
+    ft_cdlstadd_front(stack_dest, first_node_src);
 }
 
 /**

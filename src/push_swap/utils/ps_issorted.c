@@ -31,9 +31,9 @@ int	ps_issorted(t_cdlist **stack)
         else
             if (order == ORDER_DESCENDING)
                 return (ORDER_MIXED);
-        current = current->next;
-		if (current == *stack)
+        if (current->next == *stack)
 			break ;
+        current = current->next;
     }
     return (ORDER_ASCENDING);
 }
