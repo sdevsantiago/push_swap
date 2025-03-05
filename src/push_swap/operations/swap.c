@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:03:11 by sede-san          #+#    #+#             */
-/*   Updated: 2025/02/24 01:20:45 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:13:50 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,38 @@ static void	_swap(t_cdlist **stack)
 {
 	t_cdlist	*first_node;
 	t_cdlist	*second_node;
+	t_cdlist	*third_node;
 
 	first_node = *stack;
 	second_node = (*stack)->next;
-	ft_cdlstlast(*stack)->next = second_node;
-	second_node->next->previous = first_node;
-	ft_swap(first_node->next, second_node->next);
-	ft_swap(first_node->previous, second_node->previous);
+	if (second_node->next != first_node)
+	{
+		third_node = second_node->next;
+		if (third_node->next == first_node)
+			third_node->next = second_node;
+		third_node->previous = first_node;
+		first_node->next = third_node;
+		first_node->previous = second_node;
+		second_node->next = first_node;
+	}
 	*stack = second_node;
 }
 
-void	sa(t_cdlist *stack_a)
+void	sa(t_cdlist **stack_a)
 {
-	_swap(&stack_a);
+	_swap(stack_a);
 	ft_printf("sa\n");
 }
 
-void	sb(t_cdlist *stack_b)
+void	sb(t_cdlist **stack_b)
 {
-	_swap(&stack_b);
+	_swap(stack_b);
 	ft_printf("sb\n");
 }
 
-void	ss(t_cdlist *stack_a, t_cdlist *stack_b)
+void	ss(t_cdlist **stack_a, t_cdlist **stack_b)
 {
-	_swap(&stack_a);
-	_swap(&stack_b);
+	_swap(stack_a);
+	_swap(stack_b);
 	ft_printf("ss\n");
 }

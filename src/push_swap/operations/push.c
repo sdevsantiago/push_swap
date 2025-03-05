@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:03:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/02/24 01:24:52 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:41:45 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ static void	_push(t_cdlist **stack_src, t_cdlist **stack_dest)
  * @param stack_a The destination stack.
  * @param stack_b The source stack.
  */
-void	pa(t_cdlist *stack_b, t_cdlist *stack_a)
+void	pa(t_cdlist **stack_b, t_cdlist **stack_a)
 {
-    _push(&stack_b, &stack_a);
+    _push(stack_b, stack_a);
     ft_printf("pa\n");
 }
 
@@ -52,8 +52,8 @@ void	pa(t_cdlist *stack_b, t_cdlist *stack_a)
  * @param stack_a The source stack.
  * @param stack_b The destination stack.
  */
-void	pb(t_cdlist *stack_a, t_cdlist *stack_b)
+void	pb(t_cdlist **stack_a, t_cdlist **stack_b)
 {
-    _push(&stack_a, &stack_b);
+    _push(stack_a, stack_b);
     ft_printf("pb\n");
 }

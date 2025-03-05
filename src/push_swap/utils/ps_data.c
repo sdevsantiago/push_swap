@@ -12,9 +12,9 @@
 
 #include "../../../include/push_swap.h"
 
-t_push_swap	*ps_data(t_cdlist *stack)
+t_push_swap	*ps_data(t_cdlist *node)
 {
-	if (!stack)
+	if (!node)
 		return (NULL);
-	return ((t_push_swap *)(stack->content));
+	return ((t_push_swap *)(node->content));
 }

@@ -6,13 +6,13 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:55:36 by sede-san          #+#    #+#             */
-/*   Updated: 2025/02/24 01:17:02 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:51:11 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/push_swap.h"
 
-static t_cdlist	*_getlowest(t_cdlist *stack_a);
+static t_cdlist	*_getlowest(t_cdlist **stack_a);
 
 /**
  * @brief Sorts a four number stack following push_swap instructions
@@ -24,11 +24,11 @@ static t_cdlist	*_getlowest(t_cdlist *stack_a);
  * @see ps_threesort.c
  * @todo This algorithm can be improved, not priority
  */
-void	ps_foursort(t_cdlist *stack_a, t_cdlist *stack_b)
+void	ps_foursort(t_cdlist **stack_a, t_cdlist **stack_b)
 {
 	size_t	i_low;
 
-	if (!stack_a || !stack_b)
+	if (!stack_a || !*stack_a)
 		return ;
 	i_low = ps_data(_getlowest(stack_a))->index;
 	if (i_low == 1)
@@ -40,7 +40,7 @@ void	ps_foursort(t_cdlist *stack_a, t_cdlist *stack_b)
 	}
 	else if (i_low == 3)
 		rra(stack_a);
-	if (ps_issorted(&stack_a))
+	if (ps_issorted(stack_a) == ORDER_ASCENDING)
 		return ;
 	pb(stack_a, stack_b);
 	ps_threesort(stack_a);
@@ -53,21 +53,21 @@ void	ps_foursort(t_cdlist *stack_a, t_cdlist *stack_b)
  * @return Returns a pointer to the node containing the lowest.
  * value in `stack_a`.
  */
-static t_cdlist	*_getlowest(t_cdlist *stack_a)
+static t_cdlist	*_getlowest(t_cdlist **stack_a)
 {
 	t_cdlist	*current;
 	t_cdlist	*lowest;
 
-	if (!stack_a)
+	if (!stack_a || !*stack_a)
 		return (NULL);
-	current = stack_a;
+	current = *stack_a;
 	lowest = current;
 	while (current)
 	{
 		if (ps_data(current)->num < ps_data(lowest)->num)
 			lowest = current;
 		current = current->next;
-		if (current == stack_a)
+		if (current == *stack_a)
 			break ;
 	}
 	return (lowest);

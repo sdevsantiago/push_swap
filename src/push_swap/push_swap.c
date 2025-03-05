@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:23:37 by sede-san          #+#    #+#             */
-/*   Updated: 2025/02/24 01:15:15 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:10:36 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../lib/Libft/libft.h"
 #include "../../lib/ft_printf/ft_printf.h"
 
-void	push_swap(t_cdlist *stack_a, t_cdlist *stack_b);
+void	push_swap(t_cdlist **stack_a, t_cdlist **stack_b);
 
 int	main(int argc, char const *argv[])
 {
@@ -26,12 +26,12 @@ int	main(int argc, char const *argv[])
 	stack_a = ps_fillstack(argv);
 	if (!stack_a)
 		return (ft_printf(ERROR_MESSAGE), EXIT_FAILURE);
-	if (ps_issorted(&stack_a))
+	if (ps_issorted(&stack_a) == ORDER_ASCENDING)
 		return (ft_cdlstclear(&stack_a, free), EXIT_SUCCESS);
 	stack_b = NULL;
-	push_swap(stack_a, stack_b);
+	push_swap(&stack_a, &stack_b);
 	ft_cdlstclear(&stack_a, free);
-	ft_cdlstclear(&stack_b, free);
+	ft_cdlstclear(&stack_b, NULL);
 	return (EXIT_SUCCESS);
 }
 
@@ -39,11 +39,11 @@ int	main(int argc, char const *argv[])
  * @brief Sorts a stack of numbers in ascending order.
  * @attention Numbers must be unique.
  */
-void	push_swap(t_cdlist *stack_a, t_cdlist *stack_b)
+void	push_swap(t_cdlist **stack_a, t_cdlist **stack_b)
 {
 	size_t	size_a;
 
-	size_a = ft_cdlstsize(stack_a);
+	size_a = ft_cdlstsize(*stack_a);
 	if (size_a == 2)
 		ps_twosort(stack_a);
 	else if (size_a == 3)
