@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:23:37 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/05 18:38:17 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/06 01:40:51 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	push_swap(t_cdlist **stack_a, t_cdlist **stack_b)
 {
 	size_t	size_a;
 
-	size_a = ft_cdlstsize(*stack_a);
+	size_a = ps_data(ft_cdlstlast(*stack_a))->index + 1;
 	if (size_a == 2)
 		ps_twosort(stack_a);
 	else if (size_a == 3)

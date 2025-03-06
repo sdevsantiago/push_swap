@@ -8,7 +8,7 @@
 			"name": "cc - Compilar y depurar archivo activo",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${fileDirname}/a.out",
+			"program": "${workspaceRoot}/a.out",
 			"args": ["1 2 4 3"],
 			"stopAtEntry": false,
 			"cwd": "${fileDirname}",

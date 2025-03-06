@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:03:07 by sede-san          #+#    #+#             */
-/*   Updated: 2025/02/25 19:48:05 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/06 01:28:57 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static void	_reverserotate(t_cdlist **stack)
 {
-	*stack = (*stack)->previous;
+	*stack = ft_cdlstlast(*stack);
 }
 
 void	rra(t_cdlist **stack_a)
