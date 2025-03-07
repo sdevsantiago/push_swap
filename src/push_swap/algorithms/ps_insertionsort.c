@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:23:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/02/25 15:39:38 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:12:48 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @brief
  */
 void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
-							size_t run)
+			size_t run)
 {
 	t_cdlist	*biggest;
 	t_cdlist	*lowest;
@@ -31,7 +31,7 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 		lowest = *stack_b;
 	else
 		lowest = (*stack_b)->next;
-	while (ps_data(*stack_a)->run == run)
+	while (*stack_a && ps_data(*stack_a)->run == run)
 	{
 		if (ps_data(*stack_a)->num > ps_data(biggest)->num)
 		{
@@ -46,10 +46,14 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 			lowest = *stack_a;
 		}
 		else
+		{
 			while (ps_data(*stack_b)->num > ps_data(*stack_a)->num)
 				rb(stack_b);
+		}
 		pb(stack_a, stack_b);
 	}
-	while ((*stack_b) != biggest)
+	while (*stack_b != biggest)
 		rb(stack_b);
+	while (*stack_b)
+		pa(stack_b, stack_a);
 }
