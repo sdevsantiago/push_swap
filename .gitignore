@@ -1,3 +1,6 @@
 *.out
 *.o
 *.a
+
+# Utils
+/push_swap_visualizer/
