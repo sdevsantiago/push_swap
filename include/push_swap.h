@@ -21,6 +21,12 @@
 # define ORDER_DESCENDING -1
 # define ORDER_MIXED 0
 
+# ifndef THRESHOLD
+#  define THRESHOLD 32
+# endif
+
+# define SORTED_RUN 0
+
 /**
 	push_swap data structure
 	@param	num The value stored
@@ -46,7 +52,7 @@ void		ps_foursort(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_fivesort(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b, size_t size);
 void		ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
-								unsigned char const run);
+								size_t run);
 
 /********************************* Operations *********************************/
 
@@ -65,6 +71,7 @@ void		ss(t_cdlist **stack_a, t_cdlist **stack_b);
 /*********************************** Utils ************************************/
 
 int			ps_issorted(t_cdlist **stack);
+int			ps_issorted_run(t_cdlist **run_start, size_t run);
 t_cdlist	*ps_fillstack(char const *argv[]);
 t_push_swap	*ps_data(t_cdlist *stack);
 t_push_swap	*ps_new(int num, size_t index);

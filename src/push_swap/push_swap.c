@@ -52,8 +52,8 @@ void	push_swap(t_cdlist **stack_a, t_cdlist **stack_b)
 		ps_foursort(stack_a, stack_b);
 	else if (size_a == 5)
 		ps_fivesort(stack_a, stack_b);
-	// else if (len_stack_a <= THRESHOLD)
-		// ps_insertionsort(stack_a, stack_b);
+	else if (size_a <= THRESHOLD)
+		ps_insertionsort(stack_a, stack_b, 0);
 	else
 		ps_timsort(stack_a, stack_b, size_a);
 }
