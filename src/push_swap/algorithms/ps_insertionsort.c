@@ -16,7 +16,7 @@
  * @brief
  */
 void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
-							unsigned char const run)
+							size_t run)
 {
 	t_cdlist	*biggest;
 	t_cdlist	*lowest;
