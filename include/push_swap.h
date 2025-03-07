@@ -6,14 +6,14 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:26:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/06 02:15:35 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:56:53 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/Libft/libft.h"
-
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
+
+# include "../lib/Libft/libft.h"
 
 # define ERROR_MESSAGE "Error\n"
 
@@ -32,7 +32,7 @@
 	@param	num The value stored
 	@param	index The index where the node is located
 */
-typedef struct	s_push_swap
+typedef struct s_push_swap
 {
 	int				num;
 	size_t			index;
@@ -42,8 +42,6 @@ typedef struct	s_push_swap
 	unsigned char	index_run;
 }				t_push_swap;
 
-
-
 /********************************* Algorithms *********************************/
 
 void		ps_twosort(t_cdlist **stack_a);
@@ -52,7 +50,7 @@ void		ps_foursort(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_fivesort(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b, size_t size);
 void		ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
-								size_t run);
+				size_t run);
 
 /********************************* Operations *********************************/
 
@@ -73,7 +71,13 @@ void		ss(t_cdlist **stack_a, t_cdlist **stack_b);
 int			ps_issorted(t_cdlist **stack);
 int			ps_issorted_run(t_cdlist **run_start, size_t run);
 t_cdlist	*ps_fillstack(char const *argv[]);
-t_push_swap	*ps_data(t_cdlist *stack);
 t_push_swap	*ps_new(int num, size_t index);
 
-#endif
+/****************************** Inline functions ******************************/
+
+static inline t_push_swap	*ps_data(t_cdlist *node)
+{
+	return ((t_push_swap *)(node->content));
+}
+
+#endif /* PUSH_SWAP_H */
