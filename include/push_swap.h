@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:26:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/07 16:56:53 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/08 02:01:39 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,17 @@ t_push_swap	*ps_new(int num, size_t index);
 
 /****************************** Inline functions ******************************/
 
+/**
+ * @brief Converts a doubly linked list node into a pointer to `t_push_swap`.
+ *
+ * @param node Pointer to a doubly linked list node (`t_cdlist`).
+ *
+ * @return A pointer to `t_push_swap` stored in the node's content field.
+ *
+ * @note It is assumed that the `content` field of the node contains a pointer
+ * to a t_push_swap structure. No safety checks are performed (e.g., if node is
+ * `NULL`).
+ */
 static inline t_push_swap	*ps_data(t_cdlist *node)
 {
 	return ((t_push_swap *)(node->content));
