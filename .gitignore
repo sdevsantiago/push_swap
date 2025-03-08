@@ -9,3 +9,6 @@ generator
 
 # Utils
 /push_swap_visualizer/
+
+# VSCode
+/.vscode/
