@@ -1,7 +1,7 @@
 # Output files
-push_swap
-checker
-generator
+/push_swap
+/checker
+/generator
 
 *.out
 *.o
