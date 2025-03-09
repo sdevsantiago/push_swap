@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 12:52:35 by sede-san          #+#    #+#              #
-#    Updated: 2025/02/23 21:16:05 by sede-san         ###   ########.fr        #
+#    Updated: 2025/03/09 19:24:16 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@
 NAME_PUSH_SWAP = push_swap
 NAME_CHECKER = checker
 NAME_GENERATOR = generator
+NAME_VISUALIZER = visualizer
 
 # Default name
 NAME = $(NAME_PUSH_SWAP)
@@ -86,3 +87,12 @@ bonus:
 $(NAME_GENERATOR): $(OBJ_GENERATOR)
 	$(MAKE) -C lib/Libft all bonus
 	$(AR) $(NAME_GENERATOR)
+
+# ********************************** Tools ********************************** #
+
+VISUALIZER_URL = https://github.com/o-reo/push_swap_visualizer.git
+VISUALIZER_PATH = push_swap_visualizer
+GIT = /usr/bin/git
+$(NAME_VISUALIZER):
+	$(GIT) clone $(VISUALIZER_URL) $(VISUALIZER_PATH)
+.PHONY: visualizer
