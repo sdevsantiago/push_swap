@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:26:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/09 03:25:37 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/09 05:43:02 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void		ps_fivesort(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 				size_t run);
+void		ps_mergesort(t_cdlist **stack_a, t_cdlist **stack_b);
 
 /********************************* Operations *********************************/
 

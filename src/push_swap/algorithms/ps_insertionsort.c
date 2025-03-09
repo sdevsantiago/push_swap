@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:23:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/09 02:00:46 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/09 04:01:18 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 			size_t run)
 {
+	//TODO Figure a way to also sort the numbers in ascending order
 	t_cdlist	*biggest;
 	t_cdlist	*lowest;
 
