@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:26:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/08 02:01:39 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/09 03:25:37 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		ps_twosort(t_cdlist **stack_a);
 void		ps_threesort(t_cdlist **stack_a);
 void		ps_foursort(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_fivesort(t_cdlist **stack_a, t_cdlist **stack_b);
-void		ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b, size_t size);
+void		ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 				size_t run);
 
@@ -82,9 +82,17 @@ t_push_swap	*ps_new(int num, size_t index);
  *
  * @return A pointer to `t_push_swap` stored in the node's content field.
  *
- * @note It is assumed that the `content` field of the node contains a pointer
+ * @warning It is assumed that the `content` field of the node contains a pointer
  * to a t_push_swap structure. No safety checks are performed (e.g., if node is
  * `NULL`).
+ *
+ * @note The sole purpose of this function (and inline functions in general) is
+ * to suggest the compiler that should replace whatever is inside this function
+ * whenever it's called. This is done to avoid function call overhead, which can
+ * be caused if many functions are called consecutively (e.g. repeatedly
+ * recursion). Type checks are still performed. This means that, in the case of
+ * passing a value of different type that the one requested, the compiler will
+ * throw an error.
  */
 static inline t_push_swap	*ps_data(t_cdlist *node)
 {
