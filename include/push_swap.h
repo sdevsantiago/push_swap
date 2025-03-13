@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:26:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/09 05:43:02 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:31:46 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,18 @@
 
 /**
 	push_swap data structure
-	@param	num The value stored
-	@param	index The index where the node is located
+	@param num The value stored
+	@param index The index where the node is located
+	@param cost The cost to move that node. This is only used if timsort is used
+	@param run The run that number belongs to. This is only used if timsort is
+	used
 */
 typedef struct s_push_swap
 {
 	int				num;
 	size_t			index;
-	size_t			moves_a;
-	size_t			moves_b;
-	unsigned char	run;
-	unsigned char	index_run;
+	unsigned long	cost;
+	unsigned long	run;
 }				t_push_swap;
 
 /********************************* Algorithms *********************************/
@@ -50,7 +51,7 @@ void		ps_foursort(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_fivesort(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
-				size_t run);
+				size_t run, int order);
 void		ps_mergesort(t_cdlist **stack_a, t_cdlist **stack_b);
 
 /********************************* Operations *********************************/
@@ -69,6 +70,7 @@ void		ss(t_cdlist **stack_a, t_cdlist **stack_b);
 
 /*********************************** Utils ************************************/
 
+void		ps_updateindexes(t_cdlist	**stack_a, t_cdlist **stack_b);
 int			ps_issorted(t_cdlist **stack);
 int			ps_issorted_run(t_cdlist **run_start, size_t run);
 t_cdlist	*ps_fillstack(char const *argv[]);
