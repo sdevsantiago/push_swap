@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:23:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/13 14:29:43 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:15:38 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,30 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 	{
 		if (_checkskip(stack_a))
 			continue ;
-
+		else if (ps_data(ft_cdlstlast(*stack_a))->num <
+			ps_data(ft_cdlstlast(*stack_a)->previous)->num &&
+			ps_data(ft_cdlstlast(*stack_a))->num >
+			ps_data(ft_cdlstlast(*stack_a)->previous->previous)->num)
+		{
+			rra(stack_a);
+			rra(stack_a);
+			sa(stack_a);
+			ra(stack_a);
+			ra(stack_a);
+		}
 
 		//* If this wasn't possible, we get the cheapest node to move
 		// _getcheapest(stack_a, stack_b, run);
 
 		//! Temporary code
-		if (!*stack_b)
+		if (!*stack_b && ps_data(*stack_a)->run != SORTED_RUN)
 		{
 			biggest = *stack_a;
 			pb(stack_a, stack_b);
 			continue ;
 		}
-		else if (*stack_a && (*stack_b)->next == *stack_b)
+		else if (*stack_a && *stack_b && (*stack_b)->next == *stack_b &&
+			ps_data(*stack_a)->run != SORTED_RUN)
 		{
 			if (ps_data(*stack_a)->num > ps_data(biggest)->num)
 			{
@@ -88,7 +99,8 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 			pb(stack_a, stack_b);
 			continue ;
 		}
-
+		if (ps_data(*stack_a)->num == SORTED_RUN)
+			rra(stack_a);
 		if (ps_data(*stack_a)->num > ps_data(biggest)->num ||
 			ps_data(*stack_a)->num < ps_data(lowest)->num)
 		{
@@ -133,6 +145,7 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 			}
 		}
 		pb(stack_a, stack_b);
+		ps_data(*stack_b)->run = SORTED_RUN;
 		if (!*stack_a || (ps_data(*stack_a)->run != run &&
 			ps_data(ft_cdlstlast(*stack_a))->run != run))
 			break ;

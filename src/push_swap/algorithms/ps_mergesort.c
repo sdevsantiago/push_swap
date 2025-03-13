@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 03:14:28 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/09 05:40:32 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:56:34 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	ps_mergesort(t_cdlist **stack_a, t_cdlist **stack_b)
 {
-	size_t	run;
+	// size_t	run;
 
-	run = ps_data(*stack_b)->run;
-	if (run <= 1)
+	// run = ps_data(*stack_b)->run;
+	if (ps_data(*stack_b)->run <= 1)
 	{
 		while (!(ps_data((*stack_b))->num >
 			ps_data((*stack_b)->previous)->num))
@@ -29,10 +29,13 @@ void	ps_mergesort(t_cdlist **stack_a, t_cdlist **stack_b)
 		}
 		return ;
 	}
-	while (!(ps_data((*stack_b))->num >
-		ps_data((*stack_b)->previous)->num))
-		rb(stack_b);
-	if (ps_data(*stack_a)->run == SORTED_RUN)	//? sorted run is at the top
+	if (ft_cdlstsize(*stack_b) > 1)
+	{
+		while (!(ps_data((*stack_b))->num >
+			ps_data((*stack_b)->previous)->num))
+			rb(stack_b);
+	}
+	if (*stack_a && ps_data(*stack_a)->run == SORTED_RUN)	//? sorted run is at the top
 	{
 		while (*stack_b)
 		{

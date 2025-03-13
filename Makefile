@@ -6,19 +6,18 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 12:52:35 by sede-san          #+#    #+#              #
-#    Updated: 2025/03/09 19:24:16 by sede-san         ###   ########.fr        #
+#    Updated: 2025/03/10 10:43:59 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ******************************* Output files ******************************* #
 
-NAME_PUSH_SWAP = push_swap
-NAME_CHECKER = checker
-NAME_GENERATOR = generator
-NAME_VISUALIZER = visualizer
+PUSH_SWAP = push_swap
+CHECKER = checker
+GENERATOR = generator
 
 # Default name
-NAME = $(NAME_PUSH_SWAP)
+NAME = $(PUSH_SWAP)
 
 # ************************** Compilation variables *************************** #
 # Compiler
@@ -28,6 +27,11 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 AR = ar rcs
+
+# ****************************** Libraries ********************************** #
+
+LIBFT = lib/Libft/libft.a
+LIBFTPRINTF = lib/ft_printf/libftprintf.a
 
 # ****************************** Source files ******************************** #
 
@@ -39,18 +43,21 @@ PATH_SHARED = $(PATH)/shared
 
 SRC_PUSH_SWAP = \
 	$(PATH_PUSH_SWAP)/push_swap.c					\
-	$(PATH_PUSH_SWAP)/algorithms/ps_twosort.c		\
-	$(PATH_PUSH_SWAP)/algorithms/ps_threesort.c		\
-	$(PATH_PUSH_SWAP)/algorithms/ps_foursort.c		\
 	$(PATH_PUSH_SWAP)/algorithms/ps_fivesort.c		\
-	$(PATH_PUSH_SWAP)/algorithms/ps_timsort.c		\
+	$(PATH_PUSH_SWAP)/algorithms/ps_foursort.c		\
 	$(PATH_PUSH_SWAP)/algorithms/ps_insertionsort.c	\
+	$(PATH_PUSH_SWAP)/algorithms/ps_mergesort.c		\
+	$(PATH_PUSH_SWAP)/algorithms/ps_threesort.c		\
+	$(PATH_PUSH_SWAP)/algorithms/ps_timsort.c		\
+	$(PATH_PUSH_SWAP)/algorithms/ps_twosort.c		\
 	$(PATH_PUSH_SWAP)/operations/push.c				\
 	$(PATH_PUSH_SWAP)/operations/reverserotate.c	\
 	$(PATH_PUSH_SWAP)/operations/rotate.c			\
 	$(PATH_PUSH_SWAP)/operations/swap.c				\
-	$(PATH_PUSH_SWAP)/utils/ps_data.c				\
-	$(PATH_PUSH_SWAP)/utils/ps_issorted.c
+	$(PATH_PUSH_SWAP)/utils/ps_fillstack.c			\
+	$(PATH_PUSH_SWAP)/utils/ps_issorted_run.c		\
+	$(PATH_PUSH_SWAP)/utils/ps_issorted.c			\
+	$(PATH_PUSH_SWAP)/utils/ps_new.c
 
 # SRC_CHECKER
 
@@ -63,8 +70,8 @@ OBJ_PUSH_SWAP = $(SRC_PUSH_SWAP:.c=.o)
 OBJ_CHECKER = $(SRC_CHECKER:.c=.o)
 OBJ_GENERATOR = $(SRC_GENERATOR:.c=.o)
 
-# Default compilation
-OBJ = $(OBJ_PUSH_SWAP)
+# # Default compilation
+# OBJ = $(OBJ_PUSH_SWAP)
 
 # Compile object files
 %.o: %.c
@@ -77,10 +84,11 @@ all: $(NAME)
 $(NAME): $(OBJ_PUSH_SWAP)
 	$(MAKE) -C lib/Libft all bonus
 	$(MAKE) -C lib/ft_printf all
-	mkdir build
+	$(shell mkdir -p build/{push_swap,checker,generator})
 	cp lib/Libft/libft.a build
 	cp lib/ft_printf/libftprintf.a build
-	$(AR) build/libft.a build/libftprintf.a $(OBJ_PUSH_SWAP)
+	$(CC) $(CFLAGS) $(SRC_PUSH_SWAP) $(LIBFT) $(LIBFTPRINTF) -o $(PUSH_SWAP)
+
 
 bonus:
 
