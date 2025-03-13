@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:03:09 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/07 16:14:24 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/12 21:45:00 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ static void	_rotate(t_cdlist **stack)
 void	ra(t_cdlist **stack_a)
 {
 	_rotate(stack_a);
+	ps_updateindexes(stack_a, NULL);
 	ft_printf("ra\n");
 }
 
 void	rb(t_cdlist **stack_b)
 {
 	_rotate(stack_b);
+	ps_updateindexes(NULL, stack_b);
 	ft_printf("rb\n");
 }
 
@@ -34,5 +36,6 @@ void	rr(t_cdlist **stack_a, t_cdlist **stack_b)
 {
 	_rotate(stack_a);
 	_rotate(stack_b);
+	ps_updateindexes(stack_a, stack_b);
 	ft_printf("rr\n");
 }
