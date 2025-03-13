@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:23:37 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/09 03:46:54 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/12 21:48:47 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,6 @@ void	push_swap(t_cdlist **stack_a, t_cdlist **stack_b)
 		ps_foursort(stack_a, stack_b);
 	else if (size_a == 5)
 		ps_fivesort(stack_a, stack_b);
-	else if (size_a <= THRESHOLD)
-	{
-		ps_insertionsort(stack_a, stack_b, 0);
-		while (!(ps_data((*stack_b))->num >
-				ps_data((*stack_b)->previous)->num))
-			rb(stack_b);
-		while (*stack_b)
-			pa(stack_b, stack_a);
-	}
 	else
 		ps_timsort(stack_a, stack_b);
 }
