@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:26:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/13 12:31:46 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/16 21:18:00 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@
 # define SORTED_RUN 0
 
 /**
-	push_swap data structure
 	@param num The value stored
 	@param index The index where the node is located
-	@param cost The cost to move that node. This is only used if timsort is used
+	@param target The following/previous node once the run is ordered
 	@param run The run that number belongs to. This is only used if timsort is
 	used
 */
@@ -39,7 +38,7 @@ typedef struct s_push_swap
 {
 	int				num;
 	size_t			index;
-	unsigned long	cost;
+	t_cdlist		*target;
 	unsigned long	run;
 }				t_push_swap;
 
@@ -73,8 +72,17 @@ void		ss(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_updateindexes(t_cdlist	**stack_a, t_cdlist **stack_b);
 int			ps_issorted(t_cdlist **stack);
 int			ps_issorted_run(t_cdlist **run_start, size_t run);
+size_t		ps_runsize(t_cdlist **stack, size_t run);
 t_cdlist	*ps_fillstack(char const *argv[]);
 t_push_swap	*ps_new(int num, size_t index);
+
+/**************************** Insertion sort utils ****************************/
+
+void		ps_findtargets(t_cdlist **stack_a, t_cdlist **stack_b, int order,
+				size_t run);
+int			ps_checkskips(t_cdlist **stack_a);
+t_cdlist	*ps_getcheapest(t_cdlist **stack_a, t_cdlist **stack_b,
+				size_t run, int order);
 
 /****************************** Inline functions ******************************/
 

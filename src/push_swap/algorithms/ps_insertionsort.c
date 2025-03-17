@@ -6,15 +6,15 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:23:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/13 15:15:38 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/17 01:46:19 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/push_swap.h"
 
-static int		_checkskip(t_cdlist **stack_a);
-static t_cdlist	*_getcheapest(t_cdlist **stack_a, t_cdlist **stack_b,
-		size_t run);
+static void	_movetotop(t_cdlist **stack_a, t_cdlist **stack_b, t_cdlist *node);
+static void	_terminate(t_cdlist **stack_b, int order, t_cdlist *lowest,
+				t_cdlist *biggest)
 
 /**
  * @brief Sorts, in the `stack_b`, a run of numbers from `stack_a` using the
@@ -48,36 +48,16 @@ static t_cdlist	*_getcheapest(t_cdlist **stack_a, t_cdlist **stack_b,
 void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 			size_t run, int order)
 {
-	//! Temporary code
 	t_cdlist	*biggest;
 	t_cdlist	*lowest;
+	t_cdlist	*cheapest;
 
-	// pb(stack_a, stack_b);
-
-	// //? Check if the run only has one number, in which case it is already sorted
-	// if (ps_data(*stack_a)->run != run &&
-	// 	ps_data(ft_cdlstlast(*stack_a))->run != run)
-	// 	return ;
-
-	// pb(stack_a, stack_b);
 	while (1)
 	{
-		if (_checkskip(stack_a))
+		if (ps_checkskips(stack_a))
 			continue ;
-		else if (ps_data(ft_cdlstlast(*stack_a))->num <
-			ps_data(ft_cdlstlast(*stack_a)->previous)->num &&
-			ps_data(ft_cdlstlast(*stack_a))->num >
-			ps_data(ft_cdlstlast(*stack_a)->previous->previous)->num)
-		{
-			rra(stack_a);
-			rra(stack_a);
-			sa(stack_a);
-			ra(stack_a);
-			ra(stack_a);
-		}
-
-		//* If this wasn't possible, we get the cheapest node to move
-		// _getcheapest(stack_a, stack_b, run);
+		cheapest = ps_getcheapest(stack_a, stack_b, run, order);
+		_movetotop(stack_a, stack_b, cheapest);
 
 		//! Temporary code
 		if (!*stack_b && ps_data(*stack_a)->run != SORTED_RUN)
@@ -146,86 +126,37 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 		}
 		pb(stack_a, stack_b);
 		ps_data(*stack_b)->run = SORTED_RUN;
-		if (!*stack_a || (ps_data(*stack_a)->run != run &&
-			ps_data(ft_cdlstlast(*stack_a))->run != run))
+		if (!ps_runsize(stack_a, run))
 			break ;
 	}
-	if (order == ORDER_ASCENDING)
-	{
-		if (ps_data(lowest)->index <= ft_cdlstsize(*stack_b)/2)
-			while (*stack_b != lowest)
-				rb(stack_b);
-		else
-			while (*stack_b != lowest)
-				rrb(stack_b);
-	}
-	else if (order == ORDER_DESCENDING)
-	{
-		if (ps_data(biggest)->index <= ft_cdlstsize(*stack_b)/2)
-			while (*stack_b != biggest)
-				rb(stack_b);
-		else
-			while (*stack_b != biggest)
-				rrb(stack_b);
-	}
+	_terminate(stack_b, order, lowest, biggest);
 }
 
 /**
- * @brief Checks if the number to sort in `stack_b` can be placed directly in
- * the sorted run, in which case it moves moves it.
- *
- * @param stack_a
- *
- * @return Returns `1` if the number has been sorted in the sorted run, else
- * returns `0`.
- *
- * @details This function first checks if the sorted run is either in the first
- * or the last position of the stack. If the sorted run is at the head of the
- * stack, the skip can be done by inserting a number lower than the first one of
- * the sorted run. On the other hand, if the sorted run is at the bottom of the
- * stack, the skip can be done by inserting a number higher than the last one of
- * the sorted run. If one of these cases can be achieved, the movement is done
- * and the skip is resolved, in which case 1 is returned.
- *
- * @note This is only valid if we don't have the run to sort in both the top and
- * the bottom of the stack.
+ * @brief Moves both `stack_a` and `stack_b` up to the point where `node_a` is
+ * at the top of `stack_a` and `stack_b`'s head is `node_a`'s target.
  */
-static int	_checkskip(t_cdlist **stack_a)
+static void	_movetotop(t_cdlist **stack_a, t_cdlist **stack_b, t_cdlist *node_a)
 {
-	if (ps_data(*stack_a)->run != SORTED_RUN &&
-		ps_data(ft_cdlstlast(*stack_a))->run == SORTED_RUN &&
-		ps_data(*stack_a)->num > ps_data(ft_cdlstlast(*stack_a))->num)
-	{
-		ps_data(*stack_a)->run = SORTED_RUN;
-		ra(stack_a);
-		return (1);
-	}
-	else if (ps_data(*stack_a)->run == SORTED_RUN &&
-		ps_data(ft_cdlstlast(*stack_a))->run != SORTED_RUN &&
-		ps_data(ft_cdlstlast(*stack_a))->num < ps_data(*stack_a)->num)
-	{
-		ps_data(ft_cdlstlast(*stack_a))->run = SORTED_RUN;
-		rra(stack_a);
-		return (1);
-	}
-	return (0);
+	
 }
 
-/**
- * @brief
- * @return Returns the cheapest, movement wise, node to move
- */
-// static t_cdlist	*_getcheapest(t_cdlist **stack_a, t_cdlist **stack_b,
-// 	size_t run)
-// {
-// 	int			cost;
-// 	t_cdlist	*cheapest;
+static void	_terminate(t_cdlist **stack_b, int order, t_cdlist *lowest,
+	t_cdlist *biggest)
+{
+	t_cdlist	*stack_head;
 
-// 	if (!stack_b || !*stack_b || (*stack_b)->next == *stack_b)
-// 		return (*stack_a);
-// 	cheapest = *stack_a;
-
-// }
+	if (order == ORDER_ASCENDING)
+		stack_head = lowest;
+	else
+		stack_head = biggest;
+	if (ps_data(stack_head)->index <= ft_cdlstsize(*stack_b) / 2)
+		while (*stack_b != stack_head)
+			rb(stack_b);
+	else
+		while (*stack_b != stack_head)
+			rrb(stack_b);
+}
 
 /*
 void	ps_insertionsort(tcdlist **stack_a, tcdlist **stack_b, size_t run)
