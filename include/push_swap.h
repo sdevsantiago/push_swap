@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:26:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/16 21:18:00 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/17 13:41:01 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,11 @@ t_cdlist	*ps_getcheapest(t_cdlist **stack_a, t_cdlist **stack_b,
 static inline t_push_swap	*ps_data(t_cdlist *node)
 {
 	return ((t_push_swap *)(node->content));
+}
+
+static inline int	ps_istophalf(t_cdlist *node, size_t stack_size)
+{
+	return (ps_data(node)->index <= stack_size / 2);
 }
 
 #endif /* PUSH_SWAP_H */

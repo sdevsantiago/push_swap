@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:08:52 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/17 01:44:09 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:01:21 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ static unsigned long	_calccost(t_cdlist **stack_a, t_cdlist **stack_b,
 	if (ps_data(current_a)->index <= (size_t)ft_cdlstsize(*stack_a) / 2)
 		moves_a = ps_data(current_a)->index;
 	else
-		moves_a = (size_t)ft_cdlstsize(stack_a) + ps_data(current_a)->index;
-	if (ps_data(target_b)->index <= (size_t)ft_cdlstsize(stack_b) / 2)
+		moves_a = (size_t)ft_cdlstsize(*stack_a) + ps_data(current_a)->index;
+	if (ps_data(target_b)->index <= (size_t)ft_cdlstsize(*stack_b) / 2)
 		moves_b = ps_data(target_b)->index;
 	else
-		moves_b = (size_t)ft_cdlstsize(stack_b) - ps_data(target_b)->index;
+		moves_b = (size_t)ft_cdlstsize(*stack_b) - ps_data(target_b)->index;
 	return (moves_a + moves_b + 1);
 }

@@ -6,15 +6,14 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:23:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/17 01:46:19 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:40:38 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/push_swap.h"
 
 static void	_movetotop(t_cdlist **stack_a, t_cdlist **stack_b, t_cdlist *node);
-static void	_terminate(t_cdlist **stack_b, int order, t_cdlist *lowest,
-				t_cdlist *biggest)
+static void	_terminate(t_cdlist **stack_b, int order);
 
 /**
  * @brief Sorts, in the `stack_b`, a run of numbers from `stack_a` using the
@@ -48,8 +47,8 @@ static void	_terminate(t_cdlist **stack_b, int order, t_cdlist *lowest,
 void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 			size_t run, int order)
 {
-	t_cdlist	*biggest;
-	t_cdlist	*lowest;
+	// t_cdlist	*biggest;
+	// t_cdlist	*lowest;
 	t_cdlist	*cheapest;
 
 	while (1)
@@ -59,77 +58,83 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 		cheapest = ps_getcheapest(stack_a, stack_b, run, order);
 		_movetotop(stack_a, stack_b, cheapest);
 
-		//! Temporary code
-		if (!*stack_b && ps_data(*stack_a)->run != SORTED_RUN)
-		{
-			biggest = *stack_a;
-			pb(stack_a, stack_b);
-			continue ;
-		}
-		else if (*stack_a && *stack_b && (*stack_b)->next == *stack_b &&
-			ps_data(*stack_a)->run != SORTED_RUN)
-		{
-			if (ps_data(*stack_a)->num > ps_data(biggest)->num)
-			{
-				biggest = *stack_a;
-				lowest = *stack_b;
-			}
-			else
-				lowest = *stack_a;
-			pb(stack_a, stack_b);
-			continue ;
-		}
-		if (ps_data(*stack_a)->num == SORTED_RUN)
-			rra(stack_a);
-		if (ps_data(*stack_a)->num > ps_data(biggest)->num ||
-			ps_data(*stack_a)->num < ps_data(lowest)->num)
-		{
-			if (order == ORDER_ASCENDING)
-			{
-				// here we can determine, based on the index (upper or lower
-				// half), whether it's better to rb or rrb
-				while (*stack_b != lowest)
-					rb(stack_b);
-				if (ps_data(*stack_a)->num > ps_data(biggest)->num)
-					biggest = *stack_a;
-				else
-					lowest = *stack_a;
-			}
-			else if (order == ORDER_DESCENDING)
-			{
-				// here we can determine, based on the index (upper or lower
-				// half), whether it's better to rb or rrb
-				while (*stack_b != biggest)
-					rb(stack_b);
-				if (ps_data(*stack_a)->num > ps_data(biggest)->num)
-					biggest = *stack_a;
-				else
-					lowest = *stack_a;
-			}
-		}
-		else
-		{
-			if (order == ORDER_ASCENDING)
-			{
-				while (!(ps_data(*stack_b)->num > ps_data(*stack_a)->num &&
-					ps_data(ft_cdlstlast(*stack_b))->num <
-					ps_data(*stack_a)->num))
-					rb(stack_b);
-			}
-			else if (order == ORDER_DESCENDING)
-			{
-				while (!(ps_data(*stack_b)->num < ps_data(*stack_a)->num &&
-					ps_data(ft_cdlstlast(*stack_b))->num >
-					ps_data(*stack_a)->num))
-					rb(stack_b);
-			}
-		}
+		// //! Temporary code
+		// if (!*stack_b && ps_data(*stack_a)->run != SORTED_RUN)
+		// {
+		// 	biggest = *stack_a;
+		// 	pb(stack_a, stack_b);
+		// 	continue ;
+		// }
+		// else if (*stack_a && *stack_b && (*stack_b)->next == *stack_b &&
+		// 	ps_data(*stack_a)->run != SORTED_RUN)
+		// {
+		// 	if (ps_data(*stack_a)->num > ps_data(biggest)->num)
+		// 	{
+		// 		biggest = *stack_a;
+		// 		lowest = *stack_b;
+		// 	}
+		// 	else
+		// 		lowest = *stack_a;
+		// 	pb(stack_a, stack_b);
+		// 	continue ;
+		// }
+		// if (ps_data(*stack_a)->num == SORTED_RUN)
+		// 	rra(stack_a);
+		// if (ps_data(*stack_a)->num > ps_data(biggest)->num ||
+		// 	ps_data(*stack_a)->num < ps_data(lowest)->num)
+		// {
+		// 	if (order == ORDER_ASCENDING)
+		// 	{
+		// 		// here we can determine, based on the index (upper or lower
+		// 		// half), whether it's better to rb or rrb
+		// 		while (*stack_b != lowest)
+		// 			rb(stack_b);
+		// 		if (ps_data(*stack_a)->num > ps_data(biggest)->num)
+		// 			biggest = *stack_a;
+		// 		else
+		// 			lowest = *stack_a;
+		// 	}
+		// 	else if (order == ORDER_DESCENDING)
+		// 	{
+		// 		// here we can determine, based on the index (upper or lower
+		// 		// half), whether it's better to rb or rrb
+		// 		while (*stack_b != biggest)
+		// 			rb(stack_b);
+		// 		if (ps_data(*stack_a)->num > ps_data(biggest)->num)
+		// 			biggest = *stack_a;
+		// 		else
+		// 			lowest = *stack_a;
+		// 	}
+		// }
+		// else
+		// {
+		// 	if (order == ORDER_ASCENDING)
+		// 	{
+		// 		while (!(ps_data(*stack_b)->num > ps_data(*stack_a)->num &&
+		// 			ps_data(ft_cdlstlast(*stack_b))->num <
+		// 			ps_data(*stack_a)->num))
+		// 			rb(stack_b);
+		// 	}
+		// 	else if (order == ORDER_DESCENDING)
+		// 	{
+		// 		while (!(ps_data(*stack_b)->num < ps_data(*stack_a)->num &&
+		// 			ps_data(ft_cdlstlast(*stack_b))->num >
+		// 			ps_data(*stack_a)->num))
+		// 			rb(stack_b);
+		// 	}
+		// }
 		pb(stack_a, stack_b);
 		ps_data(*stack_b)->run = SORTED_RUN;
+		// if (!biggest && !lowest)
+		// 	biggest = lowest = *stack_b;
+		// else if (ps_data(*stack_b)->num > ps_data(biggest)->num)
+		// 	biggest = *stack_b;
+		// else if (ps_data(*stack_b)->num < ps_data(lowest)->num)
+		// 	lowest = *stack_b;
 		if (!ps_runsize(stack_a, run))
 			break ;
 	}
-	_terminate(stack_b, order, lowest, biggest);
+	_terminate(stack_b, order);
 }
 
 /**
@@ -138,19 +143,44 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
  */
 static void	_movetotop(t_cdlist **stack_a, t_cdlist **stack_b, t_cdlist *node_a)
 {
-	
+	if (!*stack_b)
+		return ;
+	if (ps_istophalf(node_a, (size_t)ft_cdlstsize(*stack_a)) &&
+		ps_istophalf(ps_data(node_a)->target, (size_t)ft_cdlstsize(*stack_b)))
+		while (*stack_a != node_a || *stack_b  != ps_data(node_a)->target)
+			rr(stack_a, stack_b);
+	else if (!ps_istophalf(node_a, (size_t)ft_cdlstsize(*stack_a)) &&
+		!ps_istophalf(ps_data(node_a)->target, (size_t)ft_cdlstsize(*stack_b)))
+		while (*stack_a != node_a || *stack_b  != ps_data(node_a)->target)
+			rrr(stack_a, stack_b);
+	while (ps_istophalf(node_a, (size_t)ft_cdlstsize(*stack_a)) &&
+		*stack_a != node_a)
+			ra(stack_a);
+	while (!ps_istophalf(node_a, (size_t)ft_cdlstsize(*stack_a)) &&
+		*stack_a != node_a)
+			rra(stack_a);
+	while (ps_istophalf(ps_data(node_a)->target, (size_t)ft_cdlstsize(*stack_a))
+		&& *stack_b != ps_data(node_a)->target)
+			rb(stack_a);
+	while (!ps_istophalf(ps_data(node_a)->target, (size_t)ft_cdlstsize(*stack_a))
+		&& *stack_b != ps_data(node_a)->target)
+			rrb(stack_a);
 }
 
-static void	_terminate(t_cdlist **stack_b, int order, t_cdlist *lowest,
-	t_cdlist *biggest)
+static void	_terminate(t_cdlist **stack_b, int order)
 {
 	t_cdlist	*stack_head;
 
+	stack_head = *stack_b;
 	if (order == ORDER_ASCENDING)
-		stack_head = lowest;
+		while (!(ps_data(stack_head->previous)->num > ps_data(stack_head)->num
+			&& ps_data(stack_head->next)->num > ps_data(stack_head)->num))
+			stack_head = stack_head->next;
 	else
-		stack_head = biggest;
-	if (ps_data(stack_head)->index <= ft_cdlstsize(*stack_b) / 2)
+		while (!(ps_data(stack_head->previous)->num < ps_data(stack_head)->num
+			&& ps_data(stack_head->next)->num < ps_data(stack_head)->num))
+			stack_head = stack_head->next;
+	if (ps_data(stack_head)->index <= (size_t)ft_cdlstsize(*stack_b) / 2)
 		while (*stack_b != stack_head)
 			rb(stack_b);
 	else

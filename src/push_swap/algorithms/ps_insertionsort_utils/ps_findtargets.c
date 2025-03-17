@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:16:02 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/16 21:18:41 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:58:33 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ps_findtargets(t_cdlist **stack_a, t_cdlist **stack_b, int order,
 	t_cdlist	*target_b;
 
 	current_a = *stack_a;
-	if (!*stack_b)
+	if (!*stack_b || ft_cdlstsize(*stack_b) == 1)
 		return ;
 	while (current_a)
 	{
