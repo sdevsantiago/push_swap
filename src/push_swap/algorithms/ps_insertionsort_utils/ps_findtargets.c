@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:16:02 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/20 18:09:12 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/20 19:19:47 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ void	ps_findtargets(t_cdlist **stack_a, t_cdlist **stack_b, int order,
 			break ;
 	}
 }
-
+/**
+ * Comment
+ */
 static void	_findtarget_des(t_cdlist *current_a, t_cdlist **stack_b,
 				t_cdlist *biggest, t_cdlist *smallest)
 {
