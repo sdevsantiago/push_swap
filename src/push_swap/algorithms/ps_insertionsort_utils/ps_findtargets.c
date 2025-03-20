@@ -6,11 +6,16 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:16:02 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/17 15:58:33 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:09:12 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../include/push_swap.h"
+
+static void	_findtarget_des(t_cdlist *current_a, t_cdlist **stack_b,
+	t_cdlist *biggest, t_cdlist *smallest);
+static void	_findtarget_asc(t_cdlist *current_a, t_cdlist **stack_b,
+	t_cdlist *biggest, t_cdlist *smallest);
 
 /**
  * @brief Finds the following/previous node in `stack_b` for the nodes in
@@ -22,28 +27,71 @@ void	ps_findtargets(t_cdlist **stack_a, t_cdlist **stack_b, int order,
 			size_t run)
 {
 	t_cdlist	*current_a;
-	t_cdlist	*target_b;
+	t_cdlist	*biggest;
+	t_cdlist	*smallest;
 
-	current_a = *stack_a;
 	if (!*stack_b || ft_cdlstsize(*stack_b) == 1)
 		return ;
+	current_a = *stack_a;
+	biggest = smallest = NULL;
 	while (current_a)
 	{
-		target_b = *stack_b;
 		if (ps_data(current_a)->run == run)
 		{
 			if (order == ORDER_DESCENDING)
-				while (!(ps_data(target_b)->num < ps_data(current_a)->num &&
-					ps_data(target_b->previous)->num > ps_data(current_a)->num))
-					target_b = target_b->next;
+				_findtarget_des(current_a, stack_b, biggest, smallest);
 			else
-				while (!(ps_data(target_b)->num > ps_data(current_a)->num &&
-					ps_data(target_b->previous)->num < ps_data(current_a)->num))
-				target_b = target_b->next;
-			ps_data(current_a)->target = target_b;
+				_findtarget_asc(current_a, stack_b, biggest, smallest);
 		}
 		current_a = current_a->next;
 		if (current_a == *stack_a)
 			break ;
+	}
+}
+
+static void	_findtarget_des(t_cdlist *current_a, t_cdlist **stack_b,
+				t_cdlist *biggest, t_cdlist *smallest)
+{
+	if (!biggest && !smallest)
+		biggest = smallest = *stack_b;
+	if (ps_data(current_a)->num > ps_data(biggest)->num)
+	{
+		ps_data(current_a)->target = biggest;
+		biggest = current_a;
+	}
+	else if (ps_data(current_a)->num < ps_data(smallest)->num)
+	{
+		ps_data(current_a)->target = biggest;
+		smallest = current_a;
+	}
+	else
+	{
+		ps_data(current_a)->target = *stack_b;
+		while (!(ps_data(ps_data(current_a)->target)->num <
+			ps_data(ps_data(current_a)->target->previous)->num) &&
+			ps_data(current_a)->num > ps_data(ps_data(current_a)->target)->num)
+		{
+			ps_data(current_a)->target = ps_data(current_a)->target->next;
+			if (ps_data(current_a)->target == *stack_b)
+				break ;
+		}
+	}
+
+}
+
+static void	_findtarget_asc(t_cdlist *current_a, t_cdlist **stack_b,
+				t_cdlist *biggest, t_cdlist *smallest)
+{
+	if (!biggest && !smallest)
+		biggest = smallest = *stack_b;
+	if (ps_data(current_a)->num > ps_data(biggest)->num)
+	{
+		ps_data(current_a)->target = smallest;
+		biggest = current_a;
+	}
+	else if (ps_data(current_a)->num < ps_data(smallest)->num)
+	{
+		ps_data(current_a)->target = smallest;
+		smallest = current_a;
 	}
 }

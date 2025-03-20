@@ -6,14 +6,36 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:23:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/17 15:40:38 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:50:04 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/push_swap.h"
+#include "../../../lib/ft_printf/ft_printf.h"
 
 static void	_movetotop(t_cdlist **stack_a, t_cdlist **stack_b, t_cdlist *node);
 static void	_terminate(t_cdlist **stack_b, int order);
+
+static void _stackdump(t_cdlist **stack, char stack_letter)
+{
+	t_cdlist	*current;
+
+	ft_printf("stack_%c:", stack_letter);
+	if (!*stack)
+	{
+		ft_printf("\n");
+		return ;
+	}
+	current = *stack;
+	while (current)
+	{
+		ft_printf(" %d", ps_data(current)->num);
+		current = current->next;
+		if (current == *stack)
+			break ;
+	}
+	ft_printf("\n");
+}
 
 /**
  * @brief Sorts, in the `stack_b`, a run of numbers from `stack_a` using the
@@ -53,6 +75,8 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 
 	while (1)
 	{
+		_stackdump(stack_a, 'a');
+		_stackdump(stack_b, 'b');
 		if (ps_checkskips(stack_a))
 			continue ;
 		cheapest = ps_getcheapest(stack_a, stack_b, run, order);
@@ -135,6 +159,8 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 			break ;
 	}
 	_terminate(stack_b, order);
+	_stackdump(stack_a, 'a');
+	_stackdump(stack_b, 'b');
 }
 
 /**
@@ -143,15 +169,15 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
  */
 static void	_movetotop(t_cdlist **stack_a, t_cdlist **stack_b, t_cdlist *node_a)
 {
-	if (!*stack_b)
+	if (!*stack_b || !ps_data(node_a)->target)
 		return ;
 	if (ps_istophalf(node_a, (size_t)ft_cdlstsize(*stack_a)) &&
 		ps_istophalf(ps_data(node_a)->target, (size_t)ft_cdlstsize(*stack_b)))
-		while (*stack_a != node_a || *stack_b  != ps_data(node_a)->target)
+		while (*stack_a != node_a && *stack_b  != ps_data(node_a)->target)
 			rr(stack_a, stack_b);
 	else if (!ps_istophalf(node_a, (size_t)ft_cdlstsize(*stack_a)) &&
 		!ps_istophalf(ps_data(node_a)->target, (size_t)ft_cdlstsize(*stack_b)))
-		while (*stack_a != node_a || *stack_b  != ps_data(node_a)->target)
+		while (*stack_a != node_a && *stack_b  != ps_data(node_a)->target)
 			rrr(stack_a, stack_b);
 	while (ps_istophalf(node_a, (size_t)ft_cdlstsize(*stack_a)) &&
 		*stack_a != node_a)
@@ -159,10 +185,10 @@ static void	_movetotop(t_cdlist **stack_a, t_cdlist **stack_b, t_cdlist *node_a)
 	while (!ps_istophalf(node_a, (size_t)ft_cdlstsize(*stack_a)) &&
 		*stack_a != node_a)
 			rra(stack_a);
-	while (ps_istophalf(ps_data(node_a)->target, (size_t)ft_cdlstsize(*stack_a))
+	while (ps_istophalf(ps_data(node_a)->target, (size_t)ft_cdlstsize(*stack_b))
 		&& *stack_b != ps_data(node_a)->target)
 			rb(stack_a);
-	while (!ps_istophalf(ps_data(node_a)->target, (size_t)ft_cdlstsize(*stack_a))
+	while (!ps_istophalf(ps_data(node_a)->target, (size_t)ft_cdlstsize(*stack_b))
 		&& *stack_b != ps_data(node_a)->target)
 			rrb(stack_a);
 }
