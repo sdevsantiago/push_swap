@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:23:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/20 18:50:04 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/26 08:54:16 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,90 +73,17 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 	// t_cdlist	*lowest;
 	t_cdlist	*cheapest;
 
-	while (1)
+	_stackdump(stack_a, 'a');
+	_stackdump(stack_b, 'b');
+	while (ps_runsize(stack_a, run))
 	{
-		_stackdump(stack_a, 'a');
-		_stackdump(stack_b, 'b');
 		if (ps_checkskips(stack_a))
 			continue ;
 		cheapest = ps_getcheapest(stack_a, stack_b, run, order);
+		ft_printf("Cheapest is %d\n", ps_data(cheapest)->num);
 		_movetotop(stack_a, stack_b, cheapest);
-
-		// //! Temporary code
-		// if (!*stack_b && ps_data(*stack_a)->run != SORTED_RUN)
-		// {
-		// 	biggest = *stack_a;
-		// 	pb(stack_a, stack_b);
-		// 	continue ;
-		// }
-		// else if (*stack_a && *stack_b && (*stack_b)->next == *stack_b &&
-		// 	ps_data(*stack_a)->run != SORTED_RUN)
-		// {
-		// 	if (ps_data(*stack_a)->num > ps_data(biggest)->num)
-		// 	{
-		// 		biggest = *stack_a;
-		// 		lowest = *stack_b;
-		// 	}
-		// 	else
-		// 		lowest = *stack_a;
-		// 	pb(stack_a, stack_b);
-		// 	continue ;
-		// }
-		// if (ps_data(*stack_a)->num == SORTED_RUN)
-		// 	rra(stack_a);
-		// if (ps_data(*stack_a)->num > ps_data(biggest)->num ||
-		// 	ps_data(*stack_a)->num < ps_data(lowest)->num)
-		// {
-		// 	if (order == ORDER_ASCENDING)
-		// 	{
-		// 		// here we can determine, based on the index (upper or lower
-		// 		// half), whether it's better to rb or rrb
-		// 		while (*stack_b != lowest)
-		// 			rb(stack_b);
-		// 		if (ps_data(*stack_a)->num > ps_data(biggest)->num)
-		// 			biggest = *stack_a;
-		// 		else
-		// 			lowest = *stack_a;
-		// 	}
-		// 	else if (order == ORDER_DESCENDING)
-		// 	{
-		// 		// here we can determine, based on the index (upper or lower
-		// 		// half), whether it's better to rb or rrb
-		// 		while (*stack_b != biggest)
-		// 			rb(stack_b);
-		// 		if (ps_data(*stack_a)->num > ps_data(biggest)->num)
-		// 			biggest = *stack_a;
-		// 		else
-		// 			lowest = *stack_a;
-		// 	}
-		// }
-		// else
-		// {
-		// 	if (order == ORDER_ASCENDING)
-		// 	{
-		// 		while (!(ps_data(*stack_b)->num > ps_data(*stack_a)->num &&
-		// 			ps_data(ft_cdlstlast(*stack_b))->num <
-		// 			ps_data(*stack_a)->num))
-		// 			rb(stack_b);
-		// 	}
-		// 	else if (order == ORDER_DESCENDING)
-		// 	{
-		// 		while (!(ps_data(*stack_b)->num < ps_data(*stack_a)->num &&
-		// 			ps_data(ft_cdlstlast(*stack_b))->num >
-		// 			ps_data(*stack_a)->num))
-		// 			rb(stack_b);
-		// 	}
-		// }
 		pb(stack_a, stack_b);
 		ps_data(*stack_b)->run = SORTED_RUN;
-		// if (!biggest && !lowest)
-		// 	biggest = lowest = *stack_b;
-		// else if (ps_data(*stack_b)->num > ps_data(biggest)->num)
-		// 	biggest = *stack_b;
-		// else if (ps_data(*stack_b)->num < ps_data(lowest)->num)
-		// 	lowest = *stack_b;
-		if (!ps_runsize(stack_a, run))
-			break ;
 	}
 	_terminate(stack_b, order);
 	_stackdump(stack_a, 'a');
