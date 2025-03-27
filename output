@@ -1,0 +1,120 @@
+stack_a: 1 2 0 9 3 4 8 7 5 6
+stack_b:Empty
+Cheapest is 1
+Moved
+pb
+stack_a: 2 0 9 3 4 8 7 5 6
+stack_b: 1
+Cheapest is 2
+Moved
+pb
+stack_a: 0 9 3 4 8 7 5 6
+stack_b: 2 1
+Target for 0 in stack_a is 2 in stack_b
+Target for 9 in stack_a is 2 in stack_b
+Target for 3 in stack_a is 1 in stack_b
+Target for 4 in stack_a is 1 in stack_b
+Target for 8 in stack_a is 1 in stack_b
+Target for 7 in stack_a is 1 in stack_b
+Target for 5 in stack_a is 1 in stack_b
+Target for 6 in stack_a is 1 in stack_b
+Cheapest is 0
+Moved
+pb
+stack_a: 9 3 4 8 7 5 6
+stack_b: 0 2 1
+Target for 9 in stack_a is 0 in stack_b
+Target for 3 in stack_a is 0 in stack_b
+Target for 4 in stack_a is 0 in stack_b
+Target for 8 in stack_a is 0 in stack_b
+Target for 7 in stack_a is 0 in stack_b
+Target for 5 in stack_a is 0 in stack_b
+Target for 6 in stack_a is 0 in stack_b
+Cheapest is 9
+Moved
+pb
+stack_a: 3 4 8 7 5 6
+stack_b: 9 0 2 1
+Target for 3 in stack_a is 9 in stack_b
+Target for 4 in stack_a is 9 in stack_b
+Target for 8 in stack_a is 9 in stack_b
+Target for 7 in stack_a is 9 in stack_b
+Target for 5 in stack_a is 9 in stack_b
+Target for 6 in stack_a is 9 in stack_b
+Cheapest is 3
+Moved
+pb
+stack_a: 4 8 7 5 6
+stack_b: 3 9 0 2 1
+Target for 4 in stack_a is 9 in stack_b
+Target for 8 in stack_a is 9 in stack_b
+Target for 7 in stack_a is 9 in stack_b
+Target for 5 in stack_a is 9 in stack_b
+Target for 6 in stack_a is 9 in stack_b
+Cheapest is 4
+rb
+Moved
+pb
+stack_a: 8 7 5 6
+stack_b: 4 9 0 2 1 3
+Target for 8 in stack_a is 9 in stack_b
+Target for 7 in stack_a is 9 in stack_b
+Target for 5 in stack_a is 9 in stack_b
+Target for 6 in stack_a is 9 in stack_b
+Cheapest is 8
+rb
+Moved
+pb
+stack_a: 7 5 6
+stack_b: 8 9 0 2 1 3 4
+Target for 7 in stack_a is 8 in stack_b
+Target for 5 in stack_a is 8 in stack_b
+Target for 6 in stack_a is 8 in stack_b
+Cheapest is 7
+Moved
+pb
+stack_a: 5 6
+stack_b: 7 8 9 0 2 1 3 4
+Target for 5 in stack_a is 7 in stack_b
+Target for 6 in stack_a is 7 in stack_b
+Cheapest is 5
+Moved
+pb
+stack_a: 6
+stack_b: 5 7 8 9 0 2 1 3 4
+Target for 6 in stack_a is 7 in stack_b
+Cheapest is 6
+rb
+Moved
+pb
+stack_a:Empty
+stack_b: 6 7 8 9 0 2 1 3 4 5
+rb
+rb
+rb
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+pa
+stack_a: 8 7 6 5 4 3 1 2 0 9
+stack_b:Empty
+Cheapest is 8
+Moved
+pb
+stack_a: 7 6 5 4 3 1 2 0 9
+stack_b: 8
+Cheapest is 7
+Moved
+pb
+stack_a: 6 5 4 3 1 2 0 9
+stack_b: 7 8
+Target for 6 in stack_a is 7 in stack_b
+Target for 5 in stack_a is 7 in stack_b
+Target for 4 in stack_a is 9 in stack_b
+Target for 3 in stack_a is 9 in stack_b
