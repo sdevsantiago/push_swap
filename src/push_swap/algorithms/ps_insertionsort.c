@@ -6,38 +6,16 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:23:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/27 20:12:31 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/31 00:55:24 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/push_swap.h"
-#include "../../../lib/ft_printf/ft_printf.h"
 
 static void	_movetotop_both(t_cdlist **stack_a, t_cdlist **stack_b,
 				t_cdlist *node_a);
 static void	_movetotop(t_cdlist **stack_a, t_cdlist **stack_b, t_cdlist *node);
 static void	_terminate(t_cdlist **stack_b, int order);
-
-static void _stackdump(t_cdlist **stack, char stack_letter)
-{
-	t_cdlist	*current;
-
-	ft_printf("stack_%c:", stack_letter);
-	if (!*stack)
-	{
-		ft_printf("Empty\n");
-		return ;
-	}
-	current = *stack;
-	while (current)
-	{
-		ft_printf(" %d", ps_data(current)->num);
-		current = current->next;
-		if (current == *stack)
-			break ;
-	}
-	ft_printf("\n");
-}
 
 /**
  * @brief Sorts, in the `stack_b`, a run of numbers from `stack_a` using the
@@ -59,35 +37,20 @@ static void _stackdump(t_cdlist **stack, char stack_letter)
  * them to `stack_b` in the correct order.
  *
  * @note This function is part of the insertion sort algorithm.
- *
- * @todo Develop a function to optimize movements based on the index of the
- * number in `stack_a` and the target index in `stack_b`.
- * @todo If the number to push is bigger or lower than the biggest or lowest in
- * the stack_a, place that number directly in the stack_a.
- *
- * @todo Figure a way to also sort the numbers in ascending order. -> Mark as
- * head of the stack the biggest or the lowest number, depending on the order.
  */
 void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 			size_t run, int order)
 {
 	t_cdlist	*cheapest;
 
-	_stackdump(stack_a, 'a');
-	_stackdump(stack_b, 'b');
 	while (ps_runsize(stack_a, run))
 	{
 		if (ps_checkskips(stack_a))
 			continue ;
 		cheapest = ps_getcheapest(stack_a, stack_b, run, order);
-																				ft_printf("Cheapest is %d\n", ps_data(cheapest)->num);
 		_movetotop_both(stack_a, stack_b, cheapest);
 		_movetotop(stack_a, stack_b, cheapest);
-																				ft_printf("Moved\n");
 		pb(stack_a, stack_b);
-		ps_data(*stack_b)->run = SORTED_RUN;
-		_stackdump(stack_a, 'a');
-		_stackdump(stack_b, 'b');
 	}
 	_terminate(stack_b, order);
 }
