@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 12:52:35 by sede-san          #+#    #+#              #
-#    Updated: 2025/03/10 10:43:59 by sede-san         ###   ########.fr        #
+#    Updated: 2025/03/31 10:55:16 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@
 PUSH_SWAP = push_swap
 CHECKER = checker
 GENERATOR = generator
+VISUALIZER = visualizer
 
 # Default name
 NAME = $(PUSH_SWAP)
@@ -101,6 +102,10 @@ $(NAME_GENERATOR): $(OBJ_GENERATOR)
 VISUALIZER_URL = https://github.com/o-reo/push_swap_visualizer.git
 VISUALIZER_PATH = push_swap_visualizer
 GIT = /usr/bin/git
-$(NAME_VISUALIZER):
+$(VISUALIZER):
 	$(GIT) clone $(VISUALIZER_URL) $(VISUALIZER_PATH)
+	cd push_swap_visualizer
+	mkdir build
+	cd build
+	cmake .. && make
 .PHONY: visualizer

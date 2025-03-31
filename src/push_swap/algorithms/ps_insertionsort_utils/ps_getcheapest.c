@@ -6,14 +6,14 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:08:52 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/20 13:09:02 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:55:02 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../../include/push_swap.h"
 
 static unsigned long	_calccost(t_cdlist **stack_a, t_cdlist **stack_b,
-							t_cdlist *current_a, t_cdlist *target_b);
+							t_cdlist *current_a);
 
 /**
  * @brief
@@ -33,19 +33,21 @@ t_cdlist	*ps_getcheapest(t_cdlist **stack_a, t_cdlist **stack_b,
 	t_cdlist		*current_a;
 	unsigned long	cost_cheapest;
 
+	if (ps_data(*stack_a)->run != SORTED_RUN)
+		cheapest = *stack_a;
+	else
+		cheapest = ft_cdlstlast(*stack_a);
 	if (!*stack_b)
-		return (*stack_a);
+		return (cheapest);
 	ps_findtargets(stack_a, stack_b, order, run);
-	current_a = cheapest = *stack_a;
-	cost_cheapest = _calccost(stack_a, stack_b,
-		cheapest, ps_data(cheapest)->target);
+	current_a = *stack_a;
+	cost_cheapest = _calccost(stack_a, stack_b, cheapest);
 	while (current_a)
 	{
-		if (ps_data(current_a)->run == run && cost_cheapest >
-			_calccost(stack_a, stack_b, current_a, ps_data(current_a)->target))
+		if (ps_data(current_a)->run == run && ps_data(current_a)->target &&
+			cost_cheapest >	_calccost(stack_a, stack_b, current_a))
 		{
-			cost_cheapest =	_calccost(stack_a, stack_b,
-				current_a, ps_data(current_a)->target);
+			cost_cheapest =	_calccost(stack_a, stack_b, current_a);
 			cheapest = current_a;
 		}
 		current_a = current_a->next;
@@ -56,11 +58,15 @@ t_cdlist	*ps_getcheapest(t_cdlist **stack_a, t_cdlist **stack_b,
 }
 
 static unsigned long	_calccost(t_cdlist **stack_a, t_cdlist **stack_b,
-							t_cdlist *current_a, t_cdlist *target_b)
+							t_cdlist *current_a)
 {
-	int	moves_a;
-	int	moves_b;
+	t_cdlist	*target_b;
+	int			moves_a;
+	int			moves_b;
 
+	target_b = ps_data(current_a)->target;
+	if (!target_b)
+		return (ULONG_MAX);
 	if (ps_data(current_a)->index <= (size_t)ft_cdlstsize(*stack_a) / 2)
 		moves_a = ps_data(current_a)->index;
 	else

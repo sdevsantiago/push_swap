@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 03:14:28 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/10 13:56:34 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:26:10 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ps_mergesort(t_cdlist **stack_a, t_cdlist **stack_b)
 		{
 			pa(stack_b, stack_a);
 			ps_data(*stack_a)->run = SORTED_RUN;
+			ps_data(*stack_a)->target = NULL;
 		}
 		return ;
 	}
@@ -44,6 +45,7 @@ void	ps_mergesort(t_cdlist **stack_a, t_cdlist **stack_b)
 				rrb(stack_b);
 				pa(stack_b, stack_a);
 				ps_data(*stack_a)->run = SORTED_RUN;
+				ps_data(*stack_a)->target = NULL;
 			}
 			ra(stack_a);
 		}
@@ -57,6 +59,7 @@ void	ps_mergesort(t_cdlist **stack_a, t_cdlist **stack_b)
 			{
 				pa(stack_b, stack_a);
 				ps_data(*stack_a)->run = SORTED_RUN;
+				ps_data(*stack_a)->target = NULL;
 			}
 		}
 		ra(stack_a);

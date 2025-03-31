@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:26:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/20 13:50:27 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/31 13:52:24 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define ORDER_MIXED 0
 
 # ifndef THRESHOLD
-#  define THRESHOLD 32
+#  define THRESHOLD 16
 # endif
 
 # define SORTED_RUN 0
