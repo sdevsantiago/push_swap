@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 19:12:48 by sede-san          #+#    #+#              #
-#    Updated: 2024/11/15 09:56:29 by sede-san         ###   ########.fr        #
+#    Updated: 2025/03/31 19:59:35 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ BONUS_NAME = .bonus
 
 # ************************** Compilation variables *************************** #
 # Compiler
-CC = cc
+CC = /bin/cc
 
 # Compilation flags
 CFLAGS = -Wall -Wextra -Werror
@@ -110,20 +110,20 @@ OBJ_A = $(SRC_A:.c=.o)
 # Compile object files
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-	
+
 # ********************************* Rules ************************************ #
 # Compile all
 all: $(NAME)
 
 $(NAME): $(OBJ_MP1) $(OBJ_MP2) $(OBJ_A)
-	ar rcs $(NAME) $(OBJ_MP1) $(OBJ_MP2) $(OBJ_A)
+	/bin/ar rcs $(NAME) $(OBJ_MP1) $(OBJ_MP2) $(OBJ_A)
 
 # Compile bonus
 bonus: $(BONUS_NAME)
 
 $(BONUS_NAME): $(OBJ_B)
-	ar rcs $(NAME) $(OBJ_B)
-	touch $(BONUS_NAME)
+	/bin/ar rcs $(NAME) $(OBJ_B)
+	/bin/touch $(BONUS_NAME)
 
 # Clean object files
 clean:

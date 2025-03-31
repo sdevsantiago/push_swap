@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:23:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/31 17:39:33 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/31 20:43:35 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 			size_t run, int order)
 {
 	t_cdlist	*cheapest;
-	
+
 	if (order == ORDER_ASCENDING)
 		while (ps_data(ft_cdlstlast(*stack_a))->run == run)
 			rra(stack_a);
@@ -88,6 +88,7 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 	}
 	ft_printf("Run sorted, terminating...\n");
 	_terminate(stack_b, order);
+	ft_printf("Run normalized\n");
 }
 /**
  * @brief Moves both `stack_a` and `stack_b` up to the point where `node_a` is
@@ -98,15 +99,17 @@ static void	_movetotop_both(t_cdlist **stack_a, t_cdlist **stack_b,
 {
 	if (!*stack_b || !ps_data(node_a)->target)
 		return ;
+	if (*stack_a == node_a || *stack_b == ps_data(node_a)->target)
+		return ;
+	ft_printf("Rotating on both stacks\n");
 	if (ps_istophalf(node_a, ps_data(ft_cdlstlast(*stack_a))->index + 1) &&
-		ps_istophalf(ps_data(node_a)->target, ps_data(ft_cdlstlast(*stack_b))->index + 1) &&
-		(*stack_a != node_a && *stack_b != ps_data(node_a)->target))
-		while (*stack_a != node_a || *stack_b != ps_data(node_a)->target)
+		ps_istophalf(ps_data(node_a)->target,
+		ps_data(ft_cdlstlast(*stack_b))->index + 1))
+		while (*stack_a != node_a && *stack_b != ps_data(node_a)->target)
 			rr(stack_a, stack_b);
 	else if (!ps_istophalf(node_a, ps_data(ft_cdlstlast(*stack_a))->index + 1) &&
-		!ps_istophalf(ps_data(node_a)->target, ps_data(ft_cdlstlast(*stack_b))->index + 1)
-		&& (*stack_a != node_a && *stack_b != ps_data(node_a)->target))
-		while (*stack_a != node_a || *stack_b != ps_data(node_a)->target)
+		!ps_istophalf(ps_data(node_a)->target, ps_data(ft_cdlstlast(*stack_b))->index + 1))
+		while (*stack_a != node_a && *stack_b != ps_data(node_a)->target)
 			rrr(stack_a, stack_b);
 }
 

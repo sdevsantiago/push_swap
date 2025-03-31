@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:16:02 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/31 14:36:18 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/03/31 20:19:03 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	ps_findtargets(t_cdlist **stack_a, t_cdlist **stack_b, int order,
 				_findtarget_des(current_a, stack_b, biggest, smallest);
 			else
 				_findtarget_asc(current_a, stack_b, biggest, smallest);
-			ft_printf("Target for %d in stack_a is %d in stack_b\n", ps_data(current_a)->num, ps_data(ps_data(current_a)->target)->num);
 		}
 		current_a = current_a->next;
 		if (current_a == *stack_a)
