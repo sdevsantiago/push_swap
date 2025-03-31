@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 12:52:35 by sede-san          #+#    #+#              #
-#    Updated: 2025/03/31 10:55:16 by sede-san         ###   ########.fr        #
+#    Updated: 2025/03/31 20:06:33 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,14 @@ NAME = $(PUSH_SWAP)
 
 # ************************** Compilation variables *************************** #
 # Compiler
-CC = cc
+CC = /bin/cc
 
 # Compilation flags
 CFLAGS = -Wall -Wextra -Werror
 
-AR = ar rcs
+AR = /bin/ar rcs
+
+MAKE = /bin/make --no-print-directory
 
 # ****************************** Libraries ********************************** #
 
@@ -43,22 +45,27 @@ PATH_GENERATOR = $(PATH)/generator
 PATH_SHARED = $(PATH)/shared
 
 SRC_PUSH_SWAP = \
-	$(PATH_PUSH_SWAP)/push_swap.c					\
-	$(PATH_PUSH_SWAP)/algorithms/ps_fivesort.c		\
-	$(PATH_PUSH_SWAP)/algorithms/ps_foursort.c		\
-	$(PATH_PUSH_SWAP)/algorithms/ps_insertionsort.c	\
-	$(PATH_PUSH_SWAP)/algorithms/ps_mergesort.c		\
-	$(PATH_PUSH_SWAP)/algorithms/ps_threesort.c		\
-	$(PATH_PUSH_SWAP)/algorithms/ps_timsort.c		\
-	$(PATH_PUSH_SWAP)/algorithms/ps_twosort.c		\
-	$(PATH_PUSH_SWAP)/operations/push.c				\
-	$(PATH_PUSH_SWAP)/operations/reverserotate.c	\
-	$(PATH_PUSH_SWAP)/operations/rotate.c			\
-	$(PATH_PUSH_SWAP)/operations/swap.c				\
-	$(PATH_PUSH_SWAP)/utils/ps_fillstack.c			\
-	$(PATH_PUSH_SWAP)/utils/ps_issorted_run.c		\
-	$(PATH_PUSH_SWAP)/utils/ps_issorted.c			\
-	$(PATH_PUSH_SWAP)/utils/ps_new.c
+	$(PATH_PUSH_SWAP)/push_swap.c											\
+	$(PATH_PUSH_SWAP)/algorithms/ps_fivesort.c								\
+	$(PATH_PUSH_SWAP)/algorithms/ps_foursort.c								\
+	$(PATH_PUSH_SWAP)/algorithms/ps_insertionsort.c							\
+	$(PATH_PUSH_SWAP)/algorithms/ps_insertionsort_utils/ps_checkskips.c		\
+	$(PATH_PUSH_SWAP)/algorithms/ps_insertionsort_utils/ps_findtargets.c	\
+	$(PATH_PUSH_SWAP)/algorithms/ps_insertionsort_utils/ps_getcheapest.c	\
+	$(PATH_PUSH_SWAP)/algorithms/ps_mergesort.c								\
+	$(PATH_PUSH_SWAP)/algorithms/ps_threesort.c								\
+	$(PATH_PUSH_SWAP)/algorithms/ps_timsort.c								\
+	$(PATH_PUSH_SWAP)/algorithms/ps_twosort.c								\
+	$(PATH_PUSH_SWAP)/operations/push.c										\
+	$(PATH_PUSH_SWAP)/operations/reverserotate.c							\
+	$(PATH_PUSH_SWAP)/operations/rotate.c									\
+	$(PATH_PUSH_SWAP)/operations/swap.c										\
+	$(PATH_PUSH_SWAP)/utils/ps_fillstack.c									\
+	$(PATH_PUSH_SWAP)/utils/ps_issorted_run.c								\
+	$(PATH_PUSH_SWAP)/utils/ps_issorted.c									\
+	$(PATH_PUSH_SWAP)/utils/ps_new.c										\
+	$(PATH_PUSH_SWAP)/utils/ps_runsize.c									\
+	$(PATH_PUSH_SWAP)/utils/ps_updateindexes.c
 
 # SRC_CHECKER
 
@@ -86,16 +93,13 @@ $(NAME): $(OBJ_PUSH_SWAP)
 	$(MAKE) -C lib/Libft all bonus
 	$(MAKE) -C lib/ft_printf all
 	$(shell mkdir -p build/{push_swap,checker,generator})
-	cp lib/Libft/libft.a build
-	cp lib/ft_printf/libftprintf.a build
 	$(CC) $(CFLAGS) $(SRC_PUSH_SWAP) $(LIBFT) $(LIBFTPRINTF) -o $(PUSH_SWAP)
 
 
 bonus:
 
-$(NAME_GENERATOR): $(OBJ_GENERATOR)
-	$(MAKE) -C lib/Libft all bonus
-	$(AR) $(NAME_GENERATOR)
+$(GENERATOR): $(OBJ_GENERATOR)
+	$(CC) $(CFLAGS) $(SRC_GENERATOR) -o $(GENERATOR)
 
 # ********************************** Tools ********************************** #
 
