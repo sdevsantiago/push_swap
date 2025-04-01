@@ -6,62 +6,74 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 03:14:28 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/31 16:26:10 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:30:35 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/push_swap.h"
+#include "../../../lib/ft_printf/ft_printf.h"
+
+static void _stackdump(t_cdlist **stack, char stack_letter)
+{
+	t_cdlist	*current;
+
+	ft_printf("stack_%c:", stack_letter);
+	if (!*stack)
+	{
+		ft_printf("Empty\n");
+		return ;
+	}
+	current = *stack;
+	while (current)
+	{
+		ft_printf(" %d", ps_data(current)->num);
+		current = current->next;
+		if (current == *stack)
+			break ;
+	}
+	ft_printf("\n");
+}
+
+static void		_merge(t_cdlist **stack_b, t_cdlist **stack_a);
 
 void	ps_mergesort(t_cdlist **stack_a, t_cdlist **stack_b)
 {
-	// size_t	run;
+	size_t	sorted_len;
 
-	// run = ps_data(*stack_b)->run;
-	if (ps_data(*stack_b)->run <= 1)
+	if (ps_data(*stack_b)->run == 1)
 	{
-		while (!(ps_data((*stack_b))->num >
-			ps_data((*stack_b)->previous)->num))
-			rb(stack_b);
 		while (*stack_b)
-		{
-			pa(stack_b, stack_a);
-			ps_data(*stack_a)->run = SORTED_RUN;
-			ps_data(*stack_a)->target = NULL;
-		}
+			_merge(stack_b, stack_a);
 		return ;
 	}
-	if (ft_cdlstsize(*stack_b) > 1)
+	sorted_len = ps_runsize(stack_a, SORTED_RUN);
+	if (ps_data(*stack_a)->run == SORTED_RUN)
 	{
-		while (!(ps_data((*stack_b))->num >
-			ps_data((*stack_b)->previous)->num))
-			rb(stack_b);
-	}
-	if (*stack_a && ps_data(*stack_a)->run == SORTED_RUN)	//? sorted run is at the top
-	{
-		while (*stack_b)
+		while (*stack_b && sorted_len)
 		{
-			if (ps_data(ft_cdlstlast(*stack_b))->num < ps_data(*stack_a)->num)
-			{
-				rrb(stack_b);
-				pa(stack_b, stack_a);
-				ps_data(*stack_a)->run = SORTED_RUN;
-				ps_data(*stack_a)->target = NULL;
-			}
+			if (ps_data(*stack_b)->num < ps_data(*stack_a)->num)
+				_merge(stack_b, stack_a);
+			else
+				sorted_len--;
 			ra(stack_a);
+			_stackdump(stack_a, 'a');
+			_stackdump(stack_b, 'b');
 		}
-		ra(stack_a);
-	}
-	else										//? sorted run is at the bottom
-	{
+		while (sorted_len--)
+			ra(stack_a);
 		while (*stack_b)
 		{
-			if (ps_data(*stack_b)->num > ps_data(*stack_a)->num)
-			{
-				pa(stack_b, stack_a);
-				ps_data(*stack_a)->run = SORTED_RUN;
-				ps_data(*stack_a)->target = NULL;
-			}
-		}
-		ra(stack_a);
+			_merge(stack_b, stack_a);
+			ra(stack_a);
+		}				
+		_stackdump(stack_a, 'a');
+		_stackdump(stack_b, 'b');
 	}
+}
+
+static void	_merge(t_cdlist **stack_b, t_cdlist **stack_a)
+{
+	ps_data(*stack_b)->run = SORTED_RUN;
+	ps_data(*stack_b)->target = NULL;
+	pa(stack_b, stack_a);
 }

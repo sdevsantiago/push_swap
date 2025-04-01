@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:23:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/31 20:43:35 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/01 19:35:09 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 			rra(stack_a);
 	while (ps_runsize(stack_a, run))
 	{
-		if (ps_checkskips(stack_a))
-			continue ;
+		// if (ps_checkskips(stack_a))
+		// 	continue ;
 		cheapest = ps_getcheapest(stack_a, stack_b, run, order);
 		if (ps_data(cheapest)->target)
 			ft_printf("Cheapest is %d and target is %d, placing both on top\n", ps_data(cheapest)->num, ps_data(ps_data(cheapest)->target)->num);
@@ -140,11 +140,19 @@ static void	_terminate(t_cdlist **stack_b, int order)
 	if (order == ORDER_ASCENDING)
 		while (!(ps_data(stack_head->previous)->num > ps_data(stack_head)->num
 			&& ps_data(stack_head->next)->num > ps_data(stack_head)->num))
-			stack_head = stack_head->next;
+			{
+				stack_head = stack_head->next;
+				if (*stack_b == stack_head)
+					break ;
+			}
 	else
 		while (!(ps_data(stack_head->previous)->num < ps_data(stack_head)->num
 			&& ps_data(stack_head->next)->num < ps_data(stack_head)->num))
-			stack_head = stack_head->next;
+			{
+				stack_head = stack_head->next;
+				if (*stack_b == stack_head)
+					break ;
+			}
 	if (ps_data(stack_head)->index <= (size_t)ft_cdlstsize(*stack_b) / 2)
 		while (*stack_b != stack_head)
 			rb(stack_b);
