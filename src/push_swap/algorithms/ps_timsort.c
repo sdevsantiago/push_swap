@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:02:45 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/01 19:32:03 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/02 20:10:37 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,22 @@ static void _stackdump(t_cdlist **stack, char stack_letter)
 	ft_printf("\n");
 }
 
+static void	_rundump(t_cdlist **stack_a, size_t run)
+{
+	t_cdlist	*current_a;
+
+	current_a = *stack_a;
+	while (current_a)
+	{
+		if (ps_data(current_a)->run == run)
+			ft_printf("%d ",ps_data(current_a)->num);
+		current_a = current_a->next;
+		if (current_a == *stack_a)
+			break ;
+	}
+	ft_putchar('\n');
+}
+
 static void	_assignruns(t_cdlist **stack);
 
 void	ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b)
@@ -50,6 +66,7 @@ void	ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b)
 		else
 			run = ps_data(*stack_a)->run;
 		ft_printf("Sorting run %d of lenght %d\n", run, ps_runsize(stack_a, run));
+		_rundump(stack_a, run);
 		ps_insertionsort(stack_a, stack_b, run, order);
 		ft_printf("Merging...\n");
 		ps_mergesort(stack_a, stack_b);

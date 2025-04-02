@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:23:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/01 19:35:09 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/02 20:16:43 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,11 @@ void	ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 /**
  * @brief Moves both `stack_a` and `stack_b` up to the point where `node_a` is
  * at the top of `stack_a` and `stack_b`'s head is `node_a`'s target.
+ *
+ * @todo In order to simplify the movements, use swaps in case the node_a or
+ * its target is in the next position. TLDR -> use swap when
+ * *stack_a->next== node_a OR *stack_b->next == node_a->target
+ * This way, less numbers are sent to the bottom
  */
 static void	_movetotop_both(t_cdlist **stack_a, t_cdlist **stack_b,
 				t_cdlist *node_a)
