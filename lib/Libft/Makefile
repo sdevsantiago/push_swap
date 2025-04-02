@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 19:12:48 by sede-san          #+#    #+#              #
-#    Updated: 2025/03/31 19:55:04 by sede-san         ###   ########.fr        #
+#    Updated: 2025/04/02 19:44:31 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -154,7 +154,7 @@ bonus: $(BONUS_NAME)
 
 $(BONUS_NAME): $(OBJ_B)
 	/bin/ar rcs $(NAME) $(OBJ_B)
-	touch $(BONUS_NAME)
+	/bin/touch $(BONUS_NAME)
 
 # Clean object files
 clean:
