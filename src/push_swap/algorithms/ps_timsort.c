@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:02:45 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/08 14:19:41 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/08 20:15:41 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@
 // }
 
 static void	_assignruns(t_cdlist **stack);
+static void _terminate_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
+				int order);
 
 void	ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b)
 {
@@ -68,13 +70,14 @@ void	ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b)
 		// ft_printf("Sorting run %d of lenght %d\n", run, ps_runsize(stack_a, run));
 		// _rundump(stack_a, run);
 		ps_insertionsort(stack_a, stack_b, run, order);
+		_terminate_insertionsort(stack_a, stack_b, order);
 		// ft_printf("Merging...\n");
 		ps_mergesort(stack_a, stack_b, order);
 		// ft_printf("Run %d sorted and merged\n", run);
 		if (order == ORDER_DESCENDING)
 			order = ORDER_ASCENDING;
-		else
-			order = ORDER_DESCENDING;
+		// // else
+		// // 	order = ORDER_DESCENDING;
 		// _stackdump(stack_a, 'a');
 		// _stackdump(stack_b, 'b');
 	}
@@ -130,4 +133,50 @@ static void _assignruns(t_cdlist **stack_a)
 		}
 		run++;
 	}
+}
+
+static void	_terminate_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
+				int order)
+{
+	t_cdlist	*stack_head;
+	t_cdlist	*sorted_run;
+
+	stack_head = *stack_b;
+	if (order == ORDER_DESCENDING)
+	{
+		if (ps_istophalf(stack_head, ps_data(ft_cdlstlast(*stack_b))->index + 1))
+			while (*stack_b != stack_head)
+				rb(stack_b);
+		else
+			while (*stack_b != stack_head)
+				rrb(stack_b);
+		return ;
+	}
+	sorted_run = *stack_a;
+	while (ps_data(sorted_run)->run != SORTED_RUN &&
+		ps_data(sorted_run->previous)->run != SORTED_RUN)
+	{
+		sorted_run = sorted_run->next;
+		if (sorted_run == *stack_a)
+			break ;
+	}
+	while (!(ps_data(stack_head->previous)->num > ps_data(stack_head)->num
+		&& ps_data(stack_head->next)->num > ps_data(stack_head)->num))
+	{
+		stack_head = stack_head->next;
+		if (*stack_b == stack_head)
+			break ;
+	}
+	if (ps_istophalf(sorted_run, ps_data(ft_cdlstlast(*stack_a))->index + 1) &&
+		ps_istophalf(stack_head, ps_data(ft_cdlstlast(*stack_b))->index + 1))
+		while (*stack_a != sorted_run && *stack_b != stack_head)
+			rr(stack_a, stack_b);
+	while (*stack_a != sorted_run)
+			ra(stack_a);
+	if (ps_istophalf(stack_head, ps_data(ft_cdlstlast(*stack_b))->index + 1))
+		while (*stack_b != stack_head)
+			rb(stack_b);
+	else
+		while (*stack_b != stack_head)
+			rrb(stack_b);
 }
