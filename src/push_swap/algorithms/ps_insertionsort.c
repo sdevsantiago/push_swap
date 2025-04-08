@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:23:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/08 10:26:14 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:13:08 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,12 @@ static void	_movetotop(t_cdlist **stack_a, t_cdlist **stack_b, t_cdlist *node_a)
 		return ;
 	while (*stack_a != node_a &&
 		ps_istophalf(node_a, ps_data(ft_cdlstlast(*stack_a))->index + 1))
-		ra(stack_a);
+	{
+		if ((*stack_a)->next == node_a)
+			sa(stack_a);
+		else
+			ra(stack_a);
+	}
 	while (*stack_a != node_a &&
 		!ps_istophalf(node_a, ps_data(ft_cdlstlast(*stack_a))->index + 1))
 		rra(stack_a);
