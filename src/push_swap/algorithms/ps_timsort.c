@@ -6,49 +6,49 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:02:45 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/02 20:10:37 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/08 10:24:16 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/push_swap.h"
 #include "../../../lib/ft_printf/ft_printf.h"
 
-static void _stackdump(t_cdlist **stack, char stack_letter)
-{
-	t_cdlist	*current;
+// static void _stackdump(t_cdlist **stack, char stack_letter)
+// {
+// 	t_cdlist	*current;
 
-	ft_printf("stack_%c:", stack_letter);
-	if (!*stack)
-	{
-		ft_printf("Empty\n");
-		return ;
-	}
-	current = *stack;
-	while (current)
-	{
-		ft_printf(" %d", ps_data(current)->num);
-		current = current->next;
-		if (current == *stack)
-			break ;
-	}
-	ft_printf("\n");
-}
+// 	ft_printf("stack_%c:", stack_letter);
+// 	if (!*stack)
+// 	{
+// 		ft_printf("Empty\n");
+// 		return ;
+// 	}
+// 	current = *stack;
+// 	while (current)
+// 	{
+// 		ft_printf(" %d", ps_data(current)->num);
+// 		current = current->next;
+// 		if (current == *stack)
+// 			break ;
+// 	}
+// 	ft_printf("\n");
+// }
 
-static void	_rundump(t_cdlist **stack_a, size_t run)
-{
-	t_cdlist	*current_a;
+// static void	_rundump(t_cdlist **stack_a, size_t run)
+// {
+// 	t_cdlist	*current_a;
 
-	current_a = *stack_a;
-	while (current_a)
-	{
-		if (ps_data(current_a)->run == run)
-			ft_printf("%d ",ps_data(current_a)->num);
-		current_a = current_a->next;
-		if (current_a == *stack_a)
-			break ;
-	}
-	ft_putchar('\n');
-}
+// 	current_a = *stack_a;
+// 	while (current_a)
+// 	{
+// 		if (ps_data(current_a)->run == run)
+// 			ft_printf("%d ",ps_data(current_a)->num);
+// 		current_a = current_a->next;
+// 		if (current_a == *stack_a)
+// 			break ;
+// 	}
+// 	ft_putchar('\n');
+// }
 
 static void	_assignruns(t_cdlist **stack);
 
@@ -65,18 +65,18 @@ void	ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b)
 			run = ps_data(ft_cdlstlast(*stack_a))->run;
 		else
 			run = ps_data(*stack_a)->run;
-		ft_printf("Sorting run %d of lenght %d\n", run, ps_runsize(stack_a, run));
-		_rundump(stack_a, run);
+		// ft_printf("Sorting run %d of lenght %d\n", run, ps_runsize(stack_a, run));
+		// _rundump(stack_a, run);
 		ps_insertionsort(stack_a, stack_b, run, order);
-		ft_printf("Merging...\n");
-		ps_mergesort(stack_a, stack_b);
-		ft_printf("Run %d sorted and merged\n", run);
+		// ft_printf("Merging...\n");
+		ps_mergesort(stack_a, stack_b, order);
+		// ft_printf("Run %d sorted and merged\n", run);
 		if (order == ORDER_DESCENDING)
 			order = ORDER_ASCENDING;
 		else
 			order = ORDER_DESCENDING;
-		_stackdump(stack_a, 'a');
-		_stackdump(stack_b, 'b');
+		// _stackdump(stack_a, 'a');
+		// _stackdump(stack_b, 'b');
 	}
 }
 
