@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:26:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/08 10:40:39 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:00:15 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ void		ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 void		ps_mergesort(t_cdlist **stack_a, t_cdlist **stack_b, int order);
 
 /********************************* Operations *********************************/
+
+/**
+ * @brief Defines whether or not operations should print a message when
+ * performed.
+ */
+# define SILENT 0
 
 void		pa(t_cdlist **stack_b, t_cdlist **stack_a);
 void		pb(t_cdlist **stack_a, t_cdlist **stack_b);
