@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 12:19:00 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/08 14:24:01 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:33:31 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 #include "../../lib/ft_printf/ft_printf.h"
 #include "../../lib/get_next_line/get_next_line.h"
 
+#ifdef SILENT
+# undef SILENT
+#endif
 /**
  * @brief Defines whether or not operations should print a message when
  * performed.
  *
  * @note This macro overrides the value in push_swap.h
  */
-# undef SILENT
-# define SILENT 1
+#define SILENT 1
 
 int	checker(t_cdlist **stack_a, t_cdlist **stack_b);
 
