@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:26:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/08 14:00:15 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/09 11:11:42 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		ps_fivesort(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b);
 void		ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 				size_t run, int order);
-void		ps_mergesort(t_cdlist **stack_a, t_cdlist **stack_b, int order);
+void		ps_mergesort(t_cdlist **stack_a, t_cdlist **stack_b);
 
 /********************************* Operations *********************************/
 
@@ -118,7 +118,12 @@ static inline t_push_swap	*ps_data(t_cdlist *node)
 
 static inline int	ps_istophalf(t_cdlist *node, size_t stack_size)
 {
-	return (ps_data(node)->index <= (size_t)(stack_size / 2));
+	return (ps_data(node)->index <= stack_size / 2);
+}
+
+static inline size_t	ps_stacksize(t_cdlist **stack)
+{
+	return (ps_data(ft_cdlstlast(*stack))->index + 1);
 }
 
 #endif /* PUSH_SWAP_H */
