@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:26:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/08 14:00:15 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/21 11:43:10 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,14 @@ static inline t_push_swap	*ps_data(t_cdlist *node)
 	return ((t_push_swap *)(node->content));
 }
 
-static inline int	ps_istophalf(t_cdlist *node, size_t stack_size)
+static inline size_t	ps_stacksize(t_cdlist **stack)
 {
-	return (ps_data(node)->index <= (size_t)(stack_size / 2));
+	return (ps_data(ft_cdlstlast(*stack))->index + 1);
+}
+
+static inline int	ps_istophalf(t_cdlist *node, t_cdlist **stack)
+{
+	return (ps_data(node)->index <= ps_stacksize(stack) / 2);
 }
 
 #endif /* PUSH_SWAP_H */

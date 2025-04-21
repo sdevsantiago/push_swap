@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:08:52 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/31 16:55:02 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/21 12:15:29 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,15 @@ static unsigned long	_calccost(t_cdlist **stack_a, t_cdlist **stack_b,
 	target_b = ps_data(current_a)->target;
 	if (!target_b)
 		return (ULONG_MAX);
-	if (ps_data(current_a)->index <= (size_t)ft_cdlstsize(*stack_a) / 2)
+	if (ps_istophalf(current_a, stack_a))
 		moves_a = ps_data(current_a)->index;
 	else
-		moves_a = (size_t)ft_cdlstsize(*stack_a) + ps_data(current_a)->index;
+		moves_a = ps_stacksize(stack_a) - ps_data(current_a)->index;
 	if (!target_b)
 		moves_b = 0;
-	else if (ps_data(target_b)->index <= (size_t)ft_cdlstsize(*stack_b) / 2)
+	else if (ps_istophalf(target_b, stack_b))
 		moves_b = ps_data(target_b)->index;
 	else
-		moves_b = (size_t)ft_cdlstsize(*stack_b) - ps_data(target_b)->index;
+		moves_b = ps_stacksize(stack_b) - ps_data(target_b)->index;
 	return (moves_a + moves_b + 1);
 }
