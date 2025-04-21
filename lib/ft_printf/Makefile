@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 19:07:42 by sede-san          #+#    #+#              #
-#    Updated: 2025/03/31 20:00:05 by sede-san         ###   ########.fr        #
+#    Updated: 2024/11/27 20:00:22 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,10 @@ NAME = ft_printf.a
 
 # ************************** Compilation variables *************************** #
 # Compiler
-CC = /bin/cc
+CC = cc
 
 # Compilation flags
 CFLAGS = -Wall -Wextra -Werror
-
-MAKE = /bin/make --no-print-directory
 
 # ****************************** Source files ******************************** #
 SRC = \
@@ -57,9 +55,9 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(MAKE) -C Libft all bonus
-	/bin/cp Libft/libft.a $(NAME)
-	/bin/ar rcs $(NAME) $(OBJ)
-	/bin/mv $(NAME) libftprintf.a
+	cp Libft/libft.a $(NAME)
+	ar rcs $(NAME) $(OBJ)
+	mv $(NAME) libftprintf.a
 
 # Clean object files
 clean:

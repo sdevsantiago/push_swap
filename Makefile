@@ -5,110 +5,91 @@
 #                                                     +:+ +:+         +:+      #
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/05 12:52:35 by sede-san          #+#    #+#              #
-#    Updated: 2025/04/21 15:54:07 by sede-san         ###   ########.fr        #
+#    Created: 2025/04/21 20:03:18 by sede-san          #+#    #+#              #
+#    Updated: 2025/04/21 20:30:15 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ******************************* Output files ******************************* #
 
 PUSH_SWAP = push_swap
-CHECKER = checker
-GENERATOR = generator
 VISUALIZER = visualizer
 
-# Default name
-NAME = $(PUSH_SWAP)
-
 # ************************** Compilation variables *************************** #
-# Compiler
-CC = /bin/cc
 
-# Compilation flags
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-AR = /bin/ar rcs
+# ********************************** Utils *********************************** #
 
-MAKE = /bin/make --no-print-directory
-
-# ****************************** Libraries ********************************** #
-
-LIBFT = lib/Libft/libft.a
-LIBFTPRINTF = lib/ft_printf/libftprintf.a
-
-# ****************************** Source files ******************************** #
-
-PATH = src
-PATH_PUSH_SWAP = $(PATH)/push_swap
-PATH_CHECKER = $(PATH)/checker
-PATH_GENERATOR = $(PATH)/generator
-PATH_SHARED = $(PATH)/shared
-
-SRC_PUSH_SWAP = \
-	$(PATH_PUSH_SWAP)/push_swap.c											\
-	$(PATH_PUSH_SWAP)/algorithms/ps_fivesort.c								\
-	$(PATH_PUSH_SWAP)/algorithms/ps_foursort.c								\
-	$(PATH_PUSH_SWAP)/algorithms/ps_insertionsort.c							\
-	$(PATH_PUSH_SWAP)/algorithms/ps_insertionsort_utils/ps_findtargets.c	\
-	$(PATH_PUSH_SWAP)/algorithms/ps_insertionsort_utils/ps_getcheapest.c	\
-	$(PATH_PUSH_SWAP)/algorithms/ps_mergesort.c								\
-	$(PATH_PUSH_SWAP)/algorithms/ps_threesort.c								\
-	$(PATH_PUSH_SWAP)/algorithms/ps_timsort.c								\
-	$(PATH_PUSH_SWAP)/algorithms/ps_twosort.c								\
-	$(PATH_PUSH_SWAP)/operations/push.c										\
-	$(PATH_PUSH_SWAP)/operations/reverserotate.c							\
-	$(PATH_PUSH_SWAP)/operations/rotate.c									\
-	$(PATH_PUSH_SWAP)/operations/swap.c										\
-	$(PATH_PUSH_SWAP)/utils/ps_fillstack.c									\
-	$(PATH_PUSH_SWAP)/utils/ps_issorted_run.c								\
-	$(PATH_PUSH_SWAP)/utils/ps_issorted.c									\
-	$(PATH_PUSH_SWAP)/utils/ps_new.c										\
-	$(PATH_PUSH_SWAP)/utils/ps_runsize.c									\
-	$(PATH_PUSH_SWAP)/utils/ps_updateindexes.c
-
-# SRC_CHECKER
-
-SRC_GENERATOR = \
-	$(PATH_GENERATOR)/generator.c
+MAKE += --no-print-directory
 
 # ******************************* Compilation ******************************** #
 
-OBJ_PUSH_SWAP = $(SRC_PUSH_SWAP:.c=.o)
-OBJ_CHECKER = $(SRC_CHECKER:.c=.o)
-OBJ_GENERATOR = $(SRC_GENERATOR:.c=.o)
+# OBJ_PUSH_SWAP = $(SRC_PUSH_SWAP:.c=.o)
 
-# # Default compilation
-# OBJ = $(OBJ_PUSH_SWAP)
+# %.o: %.c
+# 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Compile object files
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+# ****************************** Source files ******************************** #
 
-# ********************************** Rules *********************************** #
+SRC_PATH = src
 
-all: $(NAME)
+PUSH_SWAP_PATH = $(SRC_PATH)/push_swap
 
-$(NAME): $(OBJ_PUSH_SWAP)
-	$(MAKE) -C lib/Libft all bonus
-	$(MAKE) -C lib/ft_printf all
-	$(shell mkdir -p build/{push_swap,checker,generator})
+SRC_PUSH_SWAP = \
+	$(PUSH_SWAP_PATH)/push_swap.c											\
+	$(PUSH_SWAP_PATH)/algorithms/ps_fivesort.c								\
+	$(PUSH_SWAP_PATH)/algorithms/ps_foursort.c								\
+	$(PUSH_SWAP_PATH)/algorithms/ps_insertionsort.c							\
+	$(PUSH_SWAP_PATH)/algorithms/ps_mergesort.c								\
+	$(PUSH_SWAP_PATH)/algorithms/ps_threesort.c								\
+	$(PUSH_SWAP_PATH)/algorithms/ps_timsort.c								\
+	$(PUSH_SWAP_PATH)/algorithms/ps_twosort.c								\
+	$(PUSH_SWAP_PATH)/algorithms/ps_insertionsort_utils/ps_findtargets.c	\
+	$(PUSH_SWAP_PATH)/algorithms/ps_insertionsort_utils/ps_getcheapest.c	\
+	$(PUSH_SWAP_PATH)/operations/push.c										\
+	$(PUSH_SWAP_PATH)/operations/reverserotate.c							\
+	$(PUSH_SWAP_PATH)/operations/rotate.c									\
+	$(PUSH_SWAP_PATH)/operations/swap.c										\
+	$(PUSH_SWAP_PATH)/utils/ps_fillstack.c									\
+	$(PUSH_SWAP_PATH)/utils/ps_issorted_run.c								\
+	$(PUSH_SWAP_PATH)/utils/ps_issorted.c									\
+	$(PUSH_SWAP_PATH)/utils/ps_new.c										\
+	$(PUSH_SWAP_PATH)/utils/ps_runsize.c									\
+	$(PUSH_SWAP_PATH)/utils/ps_updateindexes.c
+
+# ********************************* Rules ************************************ #
+
+all: $(PUSH_SWAP)
+
+$(PUSH_SWAP): libft	ft_printf
 	$(CC) $(CFLAGS) $(SRC_PUSH_SWAP) $(LIBFT) $(LIBFTPRINTF) -o $(PUSH_SWAP)
 
+clean:
+	$(MAKE) -C $(LIBFT_PATH) clean
 
-bonus:
+fclean: clean
+	rm -rf $(LIB_PATH)
 
-$(GENERATOR): $(OBJ_GENERATOR)
-	$(CC) $(CFLAGS) $(SRC_GENERATOR) -o $(GENERATOR)
+re: fclean all
 
-# ********************************** Tools ********************************** #
+# ****************************** Libraries ********************************** #
 
-VISUALIZER_URL = https://github.com/o-reo/push_swap_visualizer.git
-VISUALIZER_PATH = push_swap_visualizer
-GIT = /usr/bin/git
-$(VISUALIZER):
-	$(GIT) clone $(VISUALIZER_URL) $(VISUALIZER_PATH)
-	cd push_swap_visualizer
-	mkdir build
-	cd build
-	cmake .. && make
-.PHONY: visualizer
+LIB_PATH = lib
+
+LIBFT_PATH = $(LIB_PATH)/Libft
+
+LIBFT = $(LIBFT_PATH)/libft.a
+
+libft:
+	git clone git@github.com:sdevsantiago/Libft.git $(LIBFT_PATH)
+	$(MAKE) -C $(LIBFT_PATH) all bonus clean
+
+LIBFTPRINTF_PATH = $(LIB_PATH)/ft_printf
+
+LIBFTPRINTF = $(LIBFTPRINTF_PATH)/libftprintf.a
+
+ft_printf:
+	git clone git@github.com:sdevsantiago/ft_printf.git $(LIBFTPRINTF_PATH)
+	$(MAKE) -C $(LIBFTPRINTF_PATH) all
