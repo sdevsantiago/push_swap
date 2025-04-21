@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:16:02 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/21 12:10:33 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:38:00 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static t_cdlist	*_findbiggest(t_cdlist **stack_b, size_t run)
 	current_b = (*stack_b)->next;
 	while (current_b != *stack_b)
 	{
-		if (ps_data(current_b)->run == run &&
-			ps_data(current_b)->num > ps_data(biggest)->num)
+		if (ps_data(current_b)->run == run
+			&& ps_data(current_b)->num > ps_data(biggest)->num)
 			biggest = current_b;
 		current_b = current_b->next;
 	}
@@ -81,15 +81,15 @@ static t_cdlist	*_findbiggest(t_cdlist **stack_b, size_t run)
 static void	_findtarget_des(t_cdlist *current_a, t_cdlist **stack_b,
 				t_cdlist *biggest, t_cdlist *smallest)
 {
-	if (ps_data(current_a)->num > ps_data(biggest)->num ||
-		ps_data(current_a)->num < ps_data(smallest)->num)
+	if (ps_data(current_a)->num > ps_data(biggest)->num
+		|| ps_data(current_a)->num < ps_data(smallest)->num)
 		ps_data(current_a)->target = biggest;
 	else
 	{
 		ps_data(current_a)->target = *stack_b;
-		while (!(ps_data(ps_data(current_a)->target)->num <
-			ps_data(current_a)->num	&& ps_data(current_a)->num <
-			ps_data(ps_data(current_a)->target->previous)->num))
+		while (!(ps_data(ps_data(current_a)->target)->num
+				< ps_data(current_a)->num && ps_data(current_a)->num
+				< ps_data(ps_data(current_a)->target->previous)->num))
 		{
 			ps_data(current_a)->target = ps_data(current_a)->target->next;
 			if (ps_data(current_a)->target == *stack_b)
@@ -101,15 +101,15 @@ static void	_findtarget_des(t_cdlist *current_a, t_cdlist **stack_b,
 static void	_findtarget_asc(t_cdlist *current_a, t_cdlist **stack_b,
 				t_cdlist *biggest, t_cdlist *smallest)
 {
-	if (ps_data(current_a)->num > ps_data(biggest)->num ||
-		ps_data(current_a)->num < ps_data(smallest)->num)
+	if (ps_data(current_a)->num > ps_data(biggest)->num
+		|| ps_data(current_a)->num < ps_data(smallest)->num)
 		ps_data(current_a)->target = smallest;
 	else
 	{
 		ps_data(current_a)->target = *stack_b;
-		while (!(ps_data(ps_data(current_a)->target)->num >
-			ps_data(current_a)->num && ps_data(current_a)->num >
-			ps_data(ps_data(current_a)->target->previous)->num))
+		while (!(ps_data(ps_data(current_a)->target)->num
+				> ps_data(current_a)->num && ps_data(current_a)->num
+				> ps_data(ps_data(current_a)->target->previous)->num))
 		{
 			ps_data(current_a)->target = ps_data(current_a)->target->next;
 			if (ps_data(current_a)->target == *stack_b)

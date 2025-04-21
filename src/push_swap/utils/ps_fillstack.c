@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 14:02:45 by sede-san          #+#    #+#             */
-/*   Updated: 2025/02/25 16:09:58 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:51:11 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ t_cdlist	*ps_fillstack(char const *argv[])
 			if (!_isvalid(num[i]) || !_isint(num[i]) || !_isunique(n, stack))
 				return (ft_cdlstclear(&stack, free), _free_split(num), NULL);
 			if (!stack)
-				ft_cdlstadd_back(&stack, ft_cdlstnew((void*)ps_new(n, 0)));
+				ft_cdlstadd_back(&stack, ft_cdlstnew((void *)ps_new(n, 0)));
 			else
-				ft_cdlstadd_back(&stack, ft_cdlstnew((void*)
-					ps_new(n, ps_data(ft_cdlstlast(stack))->index + 1)));
+				ft_cdlstadd_back(&stack, ft_cdlstnew((void *)
+						ps_new(n, ps_data(ft_cdlstlast(stack))->index + 1)));
 			i++;
 		}
 		_free_split(num);

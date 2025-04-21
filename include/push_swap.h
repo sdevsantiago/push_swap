@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:26:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/21 11:43:10 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:52:51 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define ORDER_MIXED 0
 
 # ifndef THRESHOLD
-#  define THRESHOLD 70
+#  define THRESHOLD 110
 # endif
 
 # define SORTED_RUN 0
@@ -86,7 +86,6 @@ t_push_swap	*ps_new(int num, size_t index);
 
 void		ps_findtargets(t_cdlist **stack_a, t_cdlist **stack_b, int order,
 				size_t run);
-int			ps_checkskips(t_cdlist **stack_a);
 t_cdlist	*ps_getcheapest(t_cdlist **stack_a, t_cdlist **stack_b,
 				size_t run, int order);
 

@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:23:37 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/12 21:48:47 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/21 19:04:04 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	main(int argc, char const *argv[])
 	t_cdlist	*stack_b;
 
 	if (argc < 2)
-		return (ft_printf(ERROR_MESSAGE), EXIT_FAILURE);
+		return (ft_putstr_fd(ERROR_MESSAGE, STDERR_FILENO), EXIT_FAILURE);
 	stack_a = ps_fillstack(argv);
 	if (!stack_a)
-		return (ft_printf(ERROR_MESSAGE), EXIT_FAILURE);
+		return (ft_putstr_fd(ERROR_MESSAGE, STDERR_FILENO), EXIT_FAILURE);
 	if (ps_issorted(&stack_a) == ORDER_ASCENDING)
 		return (ft_cdlstclear(&stack_a, free), EXIT_SUCCESS);
 	stack_b = NULL;

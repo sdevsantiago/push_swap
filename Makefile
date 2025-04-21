@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 12:52:35 by sede-san          #+#    #+#              #
-#    Updated: 2025/03/31 20:06:33 by sede-san         ###   ########.fr        #
+#    Updated: 2025/04/21 15:54:07 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,6 @@ SRC_PUSH_SWAP = \
 	$(PATH_PUSH_SWAP)/algorithms/ps_fivesort.c								\
 	$(PATH_PUSH_SWAP)/algorithms/ps_foursort.c								\
 	$(PATH_PUSH_SWAP)/algorithms/ps_insertionsort.c							\
-	$(PATH_PUSH_SWAP)/algorithms/ps_insertionsort_utils/ps_checkskips.c		\
 	$(PATH_PUSH_SWAP)/algorithms/ps_insertionsort_utils/ps_findtargets.c	\
 	$(PATH_PUSH_SWAP)/algorithms/ps_insertionsort_utils/ps_getcheapest.c	\
 	$(PATH_PUSH_SWAP)/algorithms/ps_mergesort.c								\

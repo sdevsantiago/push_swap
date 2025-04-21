@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:03:11 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/08 14:14:07 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:39:35 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	_swap(t_cdlist **stack)
 	t_cdlist	*first_node;
 	t_cdlist	*second_node;
 	t_cdlist	*third_node;
-	t_cdlist 	*last_node;
+	t_cdlist	*last_node;
 
 	first_node = *stack;
 	second_node = first_node->next;
