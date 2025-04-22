@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/21 20:03:18 by sede-san          #+#    #+#              #
-#    Updated: 2025/04/22 21:22:08 by sede-san         ###   ########.fr        #
+#    Updated: 2025/04/22 21:36:57 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,12 +89,7 @@ re: fclean all
 VISUALIZER_PATH = push_swap_visualizer
 
 visualizer:
-	git clone https://github.com/o-reo/push_swap_visualizer.git
-	mkdir $(VISUALIZER_PATH)/build
-	cd $(VISUALIZER_PATH)/build
-	cmake ..
-	make
-	cd ..
+	git clone https://github.com/o-reo/push_swap_visualizer.git $(VISUALIZER_PATH)
 
 # ****************************** Libraries ********************************** #
 
