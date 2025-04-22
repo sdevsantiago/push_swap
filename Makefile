@@ -6,14 +6,13 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/21 20:03:18 by sede-san          #+#    #+#              #
-#    Updated: 2025/04/21 20:30:15 by sede-san         ###   ########.fr        #
+#    Updated: 2025/04/22 21:22:08 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ******************************* Output files ******************************* #
 
 PUSH_SWAP = push_swap
-VISUALIZER = visualizer
 
 # ************************** Compilation variables *************************** #
 
@@ -26,10 +25,10 @@ MAKE += --no-print-directory
 
 # ******************************* Compilation ******************************** #
 
-# OBJ_PUSH_SWAP = $(SRC_PUSH_SWAP:.c=.o)
+OBJ_PUSH_SWAP = $(SRC_PUSH_SWAP:.c=.o)
 
-# %.o: %.c
-# 	$(CC) $(CFLAGS) -c $< -o $@
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # ****************************** Source files ******************************** #
 
@@ -61,18 +60,41 @@ SRC_PUSH_SWAP = \
 
 # ********************************* Rules ************************************ #
 
-all: $(PUSH_SWAP)
+all: libft ft_printf $(PUSH_SWAP)
+	$(CC) $(CFLAGS) $(PUSH_SWAP_PATH)/$(PUSH_SWAP).a $(LIBFT) $(LIBFTPRINTF) -o $(PUSH_SWAP)
 
-$(PUSH_SWAP): libft	ft_printf
-	$(CC) $(CFLAGS) $(SRC_PUSH_SWAP) $(LIBFT) $(LIBFTPRINTF) -o $(PUSH_SWAP)
+$(PUSH_SWAP): $(OBJ_PUSH_SWAP)
+	ar rcs $(PUSH_SWAP_PATH)/$(PUSH_SWAP).a $(OBJ_PUSH_SWAP)
 
 clean:
-	$(MAKE) -C $(LIBFT_PATH) clean
+	if [ -d $(LIBFT_PATH) ]; then \
+		$(MAKE) -C $(LIBFT_PATH) clean; \
+	fi
+	if [ -d $(LIBFTPRINTF_PATH) ]; then \
+		$(MAKE) -C $(LIBFTPRINTF_PATH) clean; \
+	fi
+	rm -f $(OBJ_PUSH_SWAP)
+	rm -f $(PUSH_SWAP_PATH)/$(PUSH_SWAP).a
 
 fclean: clean
 	rm -rf $(LIB_PATH)
+	rm -rf $(VISUALIZER_PATH)
+	rm -f $(PUSH_SWAP)
+	rm -f $(PUSH_SWAP_PATH)/$(PUSH_SWAP).a
 
 re: fclean all
+
+# ******************************** Tools ************************************ #
+
+VISUALIZER_PATH = push_swap_visualizer
+
+visualizer:
+	git clone https://github.com/o-reo/push_swap_visualizer.git
+	mkdir $(VISUALIZER_PATH)/build
+	cd $(VISUALIZER_PATH)/build
+	cmake ..
+	make
+	cd ..
 
 # ****************************** Libraries ********************************** #
 
@@ -83,13 +105,32 @@ LIBFT_PATH = $(LIB_PATH)/Libft
 LIBFT = $(LIBFT_PATH)/libft.a
 
 libft:
-	git clone git@github.com:sdevsantiago/Libft.git $(LIBFT_PATH)
-	$(MAKE) -C $(LIBFT_PATH) all bonus clean
+	if [ ! -d $(LIBFT_PATH) ]; then \
+		git clone git@github.com:sdevsantiago/Libft.git $(LIBFT_PATH); \
+		$(MAKE) -C $(LIBFT_PATH) all bonus; \
+	elif [ ! -f $(LIBFT) ]; then \
+		$(MAKE) -C $(LIBFT_PATH) re bonus; \
+	else \
+		cd $(LIBFT_PATH); \
+		git pull; \
+		cd -; \
+	fi
 
 LIBFTPRINTF_PATH = $(LIB_PATH)/ft_printf
 
 LIBFTPRINTF = $(LIBFTPRINTF_PATH)/libftprintf.a
 
 ft_printf:
-	git clone git@github.com:sdevsantiago/ft_printf.git $(LIBFTPRINTF_PATH)
-	$(MAKE) -C $(LIBFTPRINTF_PATH) all
+	if [ ! -d $(LIBFTPRINTF_PATH) ]; then \
+		git clone git@github.com:sdevsantiago/ft_printf.git $(LIBFTPRINTF_PATH); \
+		$(MAKE) -C $(LIBFTPRINTF_PATH) all; \
+	elif [ ! -f $(LIBFTPRINTF) ]; then \
+		$(MAKE) -C $(LIBFTPRINTF_PATH) re; \
+	else \
+		cd $(LIBFTPRINTF_PATH); \
+		git pull; \
+		cd -; \
+	fi
+
+# *********************************** Phony ********************************** #
+.PHONY = all clean fclean re libft $(PUSH_SWAP) ft_printf
