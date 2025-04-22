@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/21 20:03:18 by sede-san          #+#    #+#              #
-#    Updated: 2025/04/22 21:36:57 by sede-san         ###   ########.fr        #
+#    Updated: 2025/04/22 21:39:12 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,7 +101,7 @@ LIBFT = $(LIBFT_PATH)/libft.a
 
 libft:
 	if [ ! -d $(LIBFT_PATH) ]; then \
-		git clone git@github.com:sdevsantiago/Libft.git $(LIBFT_PATH); \
+		git clone https://github.com/sdevsantiago/Libft.git $(LIBFT_PATH); \
 		$(MAKE) -C $(LIBFT_PATH) all bonus; \
 	elif [ ! -f $(LIBFT) ]; then \
 		$(MAKE) -C $(LIBFT_PATH) re bonus; \
@@ -117,7 +117,7 @@ LIBFTPRINTF = $(LIBFTPRINTF_PATH)/libftprintf.a
 
 ft_printf:
 	if [ ! -d $(LIBFTPRINTF_PATH) ]; then \
-		git clone git@github.com:sdevsantiago/ft_printf.git $(LIBFTPRINTF_PATH); \
+		git clone https://github.com/sdevsantiago/ft_printf.git $(LIBFTPRINTF_PATH); \
 		$(MAKE) -C $(LIBFTPRINTF_PATH) all; \
 	elif [ ! -f $(LIBFTPRINTF) ]; then \
 		$(MAKE) -C $(LIBFTPRINTF_PATH) re; \
