@@ -6,16 +6,16 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:02:45 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/21 19:10:38 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/04/23 02:36:51 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/push_swap.h"
 #include "../../../lib/ft_printf/ft_printf.h"
 
-static void	_assignruns(t_cdlist **stack);
-static void	_expandruns(t_cdlist **stack_a, t_cdlist *run_last,
-				unsigned long run, int run_order);
+static void		_assignruns(t_cdlist **stack);
+static t_cdlist	*_expandruns(t_cdlist **stack_a, t_cdlist *run_last,
+					unsigned long run, int run_order);
 
 void	ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b)
 {
@@ -51,6 +51,7 @@ static void	_assignruns(t_cdlist **stack_a)
 	t_cdlist	*run_start;
 	size_t		run;
 	size_t		i;
+	int			order;
 
 	current = *stack_a;
 	run = 1;
@@ -65,12 +66,15 @@ static void	_assignruns(t_cdlist **stack_a)
 			if (current == *stack_a)
 				return ;
 		}
-		_expandruns(stack_a, current, run, ps_issorted_run(&run_start, run));
+		order = ps_issorted_run(&run_start, run);
+		current = _expandruns(stack_a, current, run, order);
+		if (current == *stack_a)
+			return ;
 		run++;
 	}
 }
 
-static void	_expandruns(t_cdlist **stack_a, t_cdlist *run_last,
+static t_cdlist	*_expandruns(t_cdlist **stack_a, t_cdlist *run_last,
 							unsigned long run, int run_order)
 {
 	t_cdlist	*current;
@@ -96,4 +100,5 @@ static void	_expandruns(t_cdlist **stack_a, t_cdlist *run_last,
 				break ;
 		}
 	}
+	return (current);
 }
