@@ -6,61 +6,74 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:58:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/06 02:15:58 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/30 19:51:57 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/push_swap.h"
+#include "push_swap.h"
 
-static void		_updateindexes(t_cdlist **stack);
-static t_cdlist	*_getlowest(t_cdlist **stack_a);
+static void		updateindexes(t_cdlist **stack);
+static t_cdlist	*getlowest(t_cdlist **stack_a);
 
 /**
- * @brief Sorts a five number stack following push_swap instructions.
- * @param stack_a The stack where the numbers are stored originally
- * @param stack_b The auxiliary stack
- * @details This algorithm moves the biggest number to the first position and
- * if it is not yet sorted, moves it to `stack_b`, sorts the rest of the numbers
- * using `ps_foursort` and moves the number back to `stack_a`.
- * @see ps_foursort.c
- * @todo This algorithm can be improved, not priority
+ * @brief Sorts a five-element stack optimally.
+ *
+ * @param stack_a Pointer to the main stack containing five elements.
+ * @param stack_b Pointer to the auxiliary stack (initially empty).
+ *
+ * @details
+ * Algorithm strategy:
+ *
+ * 1. Find the smallest element and move it to top using optimal rotations:
+ *    - Position 1: sa (1 operation)
+ *    - Position 2: ra ra (2 operations)
+ *    - Position 3: rra rra (2 operations)
+ *    - Position 4: rra (1 operation)
+ *
+ * 2. Check if already sorted after positioning
+ *
+ * 3. If not sorted: push smallest to stack_b
+ *
+ * 4. Update indexes and use 4-element sort on remaining elements
+ *
+ * 5. Push smallest back to top of sorted stack
+ *
+ * This reduces the problem to a 4-element sort while ensuring the
+ * smallest element ends up in the correct position.
  */
-void	ps_fivesort(t_cdlist **stack_a, t_cdlist **stack_b)
+void	ps_fivesort(
+	t_cdlist **stack_a,
+	t_cdlist **stack_b)
 {
 	size_t	i_big;
 
 	if (!stack_a || !*stack_a)
 		return ;
-	i_big = ps_data(_getlowest(stack_a))->index;
+	i_big = ps_data(getlowest(stack_a))->index;
 	if (i_big == 1)
-		sa(stack_a);
+		sa(stack_a, 1);
 	else if (i_big == 2)
 	{
-		ra(stack_a);
-		ra(stack_a);
+		ra(stack_a, 1);
+		ra(stack_a, 1);
 	}
 	else if (i_big == 3)
 	{
-		rra(stack_a);
-		rra(stack_a);
+		rra(stack_a, 1);
+		rra(stack_a, 1);
 	}
 	else if (i_big == 4)
-		rra(stack_a);
+		rra(stack_a, 1);
 	if (ps_issorted(stack_a) == ORDER_ASCENDING)
 		return ;
-	pb(stack_a, stack_b);
-	_updateindexes(stack_a);
+	pb(stack_a, stack_b, 1);
+	updateindexes(stack_a);
 	ps_foursort(stack_a, stack_b);
-	pa(stack_b, stack_a);
+	pa(stack_b, stack_a, 1);
 }
 
-/**
- * @brief Finds the node that contains the lowest number.
- * @param stack_a The stack where the numbers are stored originally.
- * @return Returns a pointer to the node containing the lowest.
- * value in `stack_a`.
- */
-static t_cdlist	*_getlowest(t_cdlist **stack_a)
+static t_cdlist	*getlowest(
+	t_cdlist **stack_a)
 {
 	t_cdlist	*current;
 	t_cdlist	*lowest;
@@ -80,11 +93,8 @@ static t_cdlist	*_getlowest(t_cdlist **stack_a)
 	return (lowest);
 }
 
-/**
- * @brief Updates the indexes of `stack`.
- * @param stack The stack to update
- */
-static void	_updateindexes(t_cdlist	**stack)
+static void	updateindexes(
+	t_cdlist	**stack)
 {
 	t_cdlist	*current;
 	size_t		i;

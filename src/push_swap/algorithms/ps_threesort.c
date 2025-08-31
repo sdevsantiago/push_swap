@@ -6,50 +6,64 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:33:14 by sede-san          #+#    #+#             */
-/*   Updated: 2025/02/25 19:51:59 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/30 19:52:40 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/push_swap.h"
-
-static t_cdlist	*_getbiggest(t_cdlist **stack_a);
+#include "push_swap.h"
 
 /**
- * @brief Sorts a three number stack following push_swap instructions.
- * @param stack_a The stack where numbers are stored originally
- * @details This algorithm performs a movement, needing an extra if it is not
- * yet sorted. The movements are the following:
- * 1 2 3 -> sorted
- * 1 3 2 -> rra -> 2 1 3 -> sa -> sorted
- * 2 1 3 -> sa -> sorted
- * 2 3 1 -> rra -> sorted
- * 3 1 2 -> ra -> sorted
- * 3 2 1 -> ra -> 2 1 3 -> sa -> sorted
- * This algorithm ensures 0 movements if the stack is already sorted, 1 movement
- * in 3/6 cases and 2 movements in the rest of the cases.
+ * @brief Finds the node containing the biggest number in the stack.
+ *
+ * @param stack_a Pointer to the stack to search.
+ *
+ * @return Pointer to the node containing the biggest number, or NULL if stack
+ *         is empty.
+ *
+ * @details
+ * Iterates through the circular doubly linked list once to find the node with
+ * the maximum value.
  */
-void	ps_threesort(t_cdlist **stack_a)
+static t_cdlist	*getbiggest(t_cdlist **stack_a);
+
+/**
+ * @brief Sorts a three-element stack optimally.
+ *
+ * @param stack_a Pointer to the stack containing three elements.
+ *
+ * @details
+ * Optimized algorithm for 3 elements that requires at most 2
+ * operations:
+ * - Position 0 (biggest at top): ra -> check if sorted -> sa if needed
+ * - Position 1 (biggest in middle): rra -> check if sorted -> sa if needed
+ * - Position 2 (biggest at bottom): sa only
+ *
+ * This ensures:
+ * - 0 operations if already sorted
+ * - 1 operation in 3/6 cases
+ * - 2 operations in remaining cases
+ *
+ * The strategy is to move the biggest element out of the way first,
+ * then fix the remaining two if needed.
+ */
+void	ps_threesort(
+	t_cdlist **stack_a)
 {
 	size_t	i_big;
 
-	i_big = ps_data(_getbiggest(stack_a))->index;
+	i_big = ps_data(getbiggest(stack_a))->index;
 	if (i_big == 0)
-		ra(stack_a);
+		ra(stack_a, 1);
 	else if (i_big == 1)
-		rra(stack_a);
+		rra(stack_a, 1);
 	else
-		return (sa(stack_a));
+		return (sa(stack_a, 1));
 	if (ps_issorted(stack_a) != ORDER_ASCENDING)
-		sa(stack_a);
+		sa(stack_a, 1);
 }
 
-/**
- * @brief Finds the node that contains the biggest number.
- * @param stack_a The stack where the numbers are stored originally.
- * @return Returns a pointer to the node containing the biggest
- * value in `stack_a`.
- */
-static t_cdlist	*_getbiggest(t_cdlist **stack_a)
+static t_cdlist	*getbiggest(
+	t_cdlist **stack_a)
 {
 	t_cdlist	*current;
 	t_cdlist	*biggest;

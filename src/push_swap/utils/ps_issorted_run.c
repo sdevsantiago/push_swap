@@ -6,13 +6,15 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:09:16 by sede-san          #+#    #+#             */
-/*   Updated: 2025/03/07 13:25:14 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/30 19:27:33 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/push_swap.h"
+#include "push_swap.h"
 
-int	ps_issorted_run(t_cdlist **run_start, size_t run)
+int	ps_issorted_run(
+	t_cdlist **run_start,
+	size_t run)
 {
 	int			order;
 	t_cdlist	*current;

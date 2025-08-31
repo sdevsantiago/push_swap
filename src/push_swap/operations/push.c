@@ -6,19 +6,31 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:03:05 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/21 18:39:11 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/30 20:01:30 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/push_swap.h"
-#include "../../../lib/ft_printf/ft_printf.h"
+#include "push_swap.h"
 
 /**
  * @brief Pushes the top element from source stack to destination stack.
- * @param stack_src The source stack
- * @param stack_dest The destination stack
+ *
+ * @param stack_src Pointer to the source stack.
+ * @param stack_dest Pointer to the destination stack.
+ *
+ * @details
+ * Handles the complex pointer manipulation for moving a node between two
+ * circular doubly linked lists. Properly updates all pointers to maintain
+ * list integrity in both stacks.
+ *
+ * Special cases handled:
+ * - Single element source stack: becomes NULL
+ * - Empty destination stack: becomes single-element circular list
+ * - Multiple elements: Complex pointer rearrangement
  */
-static void	_push(t_cdlist **stack_src, t_cdlist **stack_dest)
+static void	push(
+	t_cdlist **stack_src,
+	t_cdlist **stack_dest)
 {
 	t_cdlist	*first_node_src;
 	t_cdlist	*second_node_src;
@@ -41,31 +53,49 @@ static void	_push(t_cdlist **stack_src, t_cdlist **stack_dest)
 }
 
 /**
- * @brief Pushes the top element from stack_b to stack_a.
- * @param stack_a The destination stack.
- * @param stack_b The source stack.
+ * @brief Push the top element from stack_b to stack_a.
+ *
+ * @param stack_b Pointer to the source stack (stack_b).
+ * @param stack_a Pointer to the destination stack (stack_a).
+ * @param print Whether to print the operation name (1) or not (0).
+ *
+ * @details
+ * Performs the 'pa' operation: takes the top element of stack_b and puts it on
+ * top of stack_a. If print is true, updates indexes and prints "pa".
  */
-void	pa(t_cdlist **stack_b, t_cdlist **stack_a)
+void	pa(
+	t_cdlist **stack_b,
+	t_cdlist **stack_a,
+	int print)
 {
-	_push(stack_b, stack_a);
-	if (!SILENT)
+	push(stack_b, stack_a);
+	if (print)
 	{
 		ps_updateindexes(stack_a, stack_b);
-		ft_printf("pa\n");
+		ft_putendl(PA);
 	}
 }
 
 /**
- * @brief Pushes the top element from stack_a to stack_b.
- * @param stack_a The source stack.
- * @param stack_b The destination stack.
+ * @brief Push the top element from stack_a to stack_b.
+ *
+ * @param stack_a Pointer to the source stack (stack_a).
+ * @param stack_b Pointer to the destination stack (stack_b).
+ * @param print Whether to print the operation name (1) or not (0).
+ *
+ * @details
+ * Performs the 'pb' operation: takes the top element of stack_a and puts it on
+ * top of stack_b. If print is true, updates indexes and prints "pb".
  */
-void	pb(t_cdlist **stack_a, t_cdlist **stack_b)
+void	pb(
+	t_cdlist **stack_a,
+	t_cdlist **stack_b,
+	int print)
 {
-	_push(stack_a, stack_b);
-	if (!SILENT)
+	push(stack_a, stack_b);
+	if (print)
 	{
 		ps_updateindexes(stack_a, stack_b);
-		ft_printf("pb\n");
+		ft_putendl(PB);
 	}
 }

@@ -6,17 +6,39 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 14:02:45 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/21 18:51:11 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/30 20:10:53 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/push_swap.h"
+#include "push_swap.h"
 
-static int	_isvalid(char *num);
-static int	_isunique(int num, t_cdlist *stack);
-static int	_isint(char *num);
-static void	_free_split(char **matrix);
+static int	isvalid(char *num);
+static int	isunique(int num, t_cdlist *stack);
+static int	isint(char *num);
 
+/**
+ * @brief Creates and fills a stack from command line arguments.
+ *
+ * @param argv Array of strings containing numbers to parse (argv from main).
+ *
+ * @return Pointer to the created stack, or NULL if parsing fails.
+ *
+ * @details
+ * Parses command line arguments to create a circular doubly linked list:
+ *
+ * 1. Splits each argument string by spaces to handle multiple numbers per arg
+ *
+ * 2. Validates each number (valid format, integer range, uniqueness)
+ *
+ * 3. Creates nodes with ps_new() and adds them with proper indexing
+ *
+ * 4. Returns NULL and cleans up on any validation error
+ *
+ * Validation performed:
+ * - Valid number format (digits, optional sign)
+ * - Within INT_MIN to INT_MAX range
+ * - No duplicate numbers in the final stack
+ */
 t_cdlist	*ps_fillstack(char const *argv[])
 {
 	t_cdlist	*stack;
@@ -32,8 +54,8 @@ t_cdlist	*ps_fillstack(char const *argv[])
 		while (num[i])
 		{
 			n = ft_atoi(num[i]);
-			if (!_isvalid(num[i]) || !_isint(num[i]) || !_isunique(n, stack))
-				return (ft_cdlstclear(&stack, free), _free_split(num), NULL);
+			if (!isvalid(num[i]) || !isint(num[i]) || !isunique(n, stack))
+				return (ft_cdlstclear(&stack, free), ft_free_split(num), NULL);
 			if (!stack)
 				ft_cdlstadd_back(&stack, ft_cdlstnew((void *)ps_new(n, 0)));
 			else
@@ -41,12 +63,12 @@ t_cdlist	*ps_fillstack(char const *argv[])
 						ps_new(n, ps_data(ft_cdlstlast(stack))->index + 1)));
 			i++;
 		}
-		_free_split(num);
+		ft_free_split(num);
 	}
 	return (stack);
 }
 
-static int	_isvalid(char *num)
+static int	isvalid(char *num)
 {
 	size_t	signs;
 
@@ -67,7 +89,7 @@ static int	_isvalid(char *num)
 	return (1);
 }
 
-static int	_isint(char *num)
+static int	isint(char *num)
 {
 	long	value;
 
@@ -75,7 +97,7 @@ static int	_isint(char *num)
 	return (value >= INT_MIN && value <= INT_MAX);
 }
 
-static int	_isunique(int num, t_cdlist *stack)
+static int	isunique(int num, t_cdlist *stack)
 {
 	t_cdlist	*current;
 
@@ -91,19 +113,4 @@ static int	_isunique(int num, t_cdlist *stack)
 			break ;
 	}
 	return (1);
-}
-
-static void	_free_split(char **matrix)
-{
-	size_t	i;
-
-	if (!matrix)
-		return ;
-	i = 0;
-	while (matrix[i])
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
 }

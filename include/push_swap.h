@@ -6,16 +6,17 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:26:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/21 15:52:51 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/30 20:10:18 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "../lib/Libft/libft.h"
+# include "libft.h"
+# include "ft_printf.h"
 
-# define ERROR_MESSAGE "Error\n"
+# define ERROR_MESSAGE "Error"
 
 # define ORDER_ASCENDING 1
 # define ORDER_DESCENDING -1
@@ -42,36 +43,73 @@ typedef struct s_push_swap
 	unsigned long	run;
 }				t_push_swap;
 
-/********************************* Algorithms *********************************/
+// ps_twosort.c
 
 void		ps_twosort(t_cdlist **stack_a);
+
+// ps_threesort.c
+
 void		ps_threesort(t_cdlist **stack_a);
+
+// ps_foursort.c
+
 void		ps_foursort(t_cdlist **stack_a, t_cdlist **stack_b);
+
+// ps_fivesort.c
+
 void		ps_fivesort(t_cdlist **stack_a, t_cdlist **stack_b);
+
+// ps_timsort.c
+
 void		ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b);
+
+// ps_insertionsort.c
+
 void		ps_insertionsort(t_cdlist **stack_a, t_cdlist **stack_b,
 				size_t run, int order);
-void		ps_mergesort(t_cdlist **stack_a, t_cdlist **stack_b, int order);
 
-/********************************* Operations *********************************/
+// ps_mergesort.c
 
-/**
- * @brief Defines whether or not operations should print a message when
- * performed.
- */
-# define SILENT 0
+void		ps_mergesort(t_cdlist **stack_a, t_cdlist **stack_b,
+				int order);
 
-void		pa(t_cdlist **stack_b, t_cdlist **stack_a);
-void		pb(t_cdlist **stack_a, t_cdlist **stack_b);
-void		rra(t_cdlist **stack_a);
-void		rrb(t_cdlist **stack_b);
-void		rrr(t_cdlist **stack_a, t_cdlist **stack_b);
-void		ra(t_cdlist **stack_a);
-void		rb(t_cdlist **stack_b);
-void		rr(t_cdlist **stack_a, t_cdlist **stack_b);
-void		sa(t_cdlist **stack_a);
-void		sb(t_cdlist **stack_b);
-void		ss(t_cdlist **stack_a, t_cdlist **stack_b);
+// push.c
+
+# define PA "pa"
+# define PB "pb"
+
+void		pa(t_cdlist **stack_b, t_cdlist **stack_a, int print);
+void		pb(t_cdlist **stack_a, t_cdlist **stack_b, int print);
+
+// reverserotate.c
+
+# define RRA "rra"
+# define RRB "rrb"
+# define RRR "rrr"
+
+void		rra(t_cdlist **stack_a, int print);
+void		rrb(t_cdlist **stack_b, int print);
+void		rrr(t_cdlist **stack_a, t_cdlist **stack_b, int print);
+
+// rotate.c
+
+# define RA "ra"
+# define RB "rb"
+# define RR "rr"
+
+void		ra(t_cdlist **stack_a, int print);
+void		rb(t_cdlist **stack_b, int print);
+void		rr(t_cdlist **stack_a, t_cdlist **stack_b, int print);
+
+// swap.c
+
+# define SA "sa"
+# define SB "sb"
+# define SS "ss"
+
+void		sa(t_cdlist **stack_a, int print);
+void		sb(t_cdlist **stack_b, int print);
+void		ss(t_cdlist **stack_a, t_cdlist **stack_b, int print);
 
 /*********************************** Utils ************************************/
 
@@ -84,45 +122,15 @@ t_push_swap	*ps_new(int num, size_t index);
 
 /**************************** Insertion sort utils ****************************/
 
-void		ps_findtargets(t_cdlist **stack_a, t_cdlist **stack_b, int order,
-				size_t run);
-t_cdlist	*ps_getcheapest(t_cdlist **stack_a, t_cdlist **stack_b,
+void		ps_findtargets(t_cdlist **stack_a, t_cdlist **stack_b,
+				int order, size_t run);
+t_cdlist	*get_cheapest(t_cdlist **stack_a, t_cdlist **stack_b,
 				size_t run, int order);
 
 /****************************** Inline functions ******************************/
 
-/**
- * @brief Converts a doubly linked list node into a pointer to `t_push_swap`.
- *
- * @param node Pointer to a doubly linked list node (`t_cdlist`).
- *
- * @return A pointer to `t_push_swap` stored in the node's content field.
- *
- * @warning It is assumed that the `content` field of the node contains a pointer
- * to a t_push_swap structure. No safety checks are performed (e.g., if node is
- * `NULL`).
- *
- * @note The sole purpose of this function (and inline functions in general) is
- * to suggest the compiler that should replace whatever is inside this function
- * whenever it's called. This is done to avoid function call overhead, which can
- * be caused if many functions are called consecutively (e.g. repeatedly
- * recursion). Type checks are still performed. This means that, in the case of
- * passing a value of different type that the one requested, the compiler will
- * throw an error.
- */
-static inline t_push_swap	*ps_data(t_cdlist *node)
-{
-	return ((t_push_swap *)(node->content));
-}
-
-static inline size_t	ps_stacksize(t_cdlist **stack)
-{
-	return (ps_data(ft_cdlstlast(*stack))->index + 1);
-}
-
-static inline int	ps_istophalf(t_cdlist *node, t_cdlist **stack)
-{
-	return (ps_data(node)->index <= ps_stacksize(stack) / 2);
-}
+t_push_swap	*ps_data(t_cdlist *node);
+size_t		ps_stacksize(t_cdlist **stack);
+int			ps_istophalf(t_cdlist *node, t_cdlist **stack);
 
 #endif /* PUSH_SWAP_H */

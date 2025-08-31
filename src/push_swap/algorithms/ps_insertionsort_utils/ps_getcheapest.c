@@ -1,33 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_getcheapest.c                                   :+:      :+:    :+:   */
+/*   get_cheapest.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:08:52 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/21 18:38:20 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/30 19:19:36 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../include/push_swap.h"
+#include "push_swap.h"
 
-static unsigned long	_calccost(t_cdlist **stack_a, t_cdlist **stack_b,
+static unsigned long	calccost(t_cdlist **stack_a, t_cdlist **stack_b,
 							t_cdlist *current_a);
 
 /**
- * @brief
+ * @brief Finds the cheapest element to move during insertion sort.
  *
- * @return Returns the cheapest, movement wise, node to move
+ * @param stack_a Pointer to the source stack.
+ * @param stack_b Pointer to the destination stack.
+ * @param run The run identifier for elements to consider.
+ * @param order The sorting order (ORDER_ASCENDING or ORDER_DESCENDING).
  *
- * @details The cost is calculated with the following formula:
- * 	1 -> cost to push to b
- *	index_a -> where the number is located in the stack_a
- *	index_b -> where the number following to the current in stack_a is in the
- *				stack_b
+ * @return Pointer to the node with the lowest movement cost.
+ *
+ * @details
+ * Optimization function that minimizes total operations:
+ *
+ * 1. Cost Calculation: For each element in the specified run, calculates
+ *    the total cost to move it to its target position in stack_b
+ *
+ * 2. Cost Components:
+ *    - Rotations needed to bring element to top of stack_a
+ *    - Rotations needed to bring target to top of stack_b
+ *    - One push operation
+ *
+ * 3. Optimization: Considers combined rotations (rr, rrr) when both
+ *    stacks need rotation in the same direction
+ *
+ * 4. Default Selection: If stack_b is empty, returns the first element
+ *    or last element based on current run status
+ *
+ * This function is crucial for minimizing the total number of operations
+ * in the insertion sort phase of the timsort algorithm.
  */
-t_cdlist	*ps_getcheapest(t_cdlist **stack_a, t_cdlist **stack_b,
-				size_t run, int order)
+t_cdlist	*get_cheapest(
+	t_cdlist **stack_a,
+	t_cdlist **stack_b,
+	size_t run,
+	int order)
 {
 	t_cdlist		*cheapest;
 	t_cdlist		*current_a;
@@ -43,8 +65,8 @@ t_cdlist	*ps_getcheapest(t_cdlist **stack_a, t_cdlist **stack_b,
 	while (current_a)
 	{
 		if (ps_data(current_a)->run == run && ps_data(current_a)->target
-			&& _calccost(stack_a, stack_b, cheapest)
-			> _calccost(stack_a, stack_b, current_a))
+			&& calccost(stack_a, stack_b, cheapest)
+			> calccost(stack_a, stack_b, current_a))
 			cheapest = current_a;
 		current_a = current_a->next;
 		if (current_a == *stack_a)
@@ -53,8 +75,10 @@ t_cdlist	*ps_getcheapest(t_cdlist **stack_a, t_cdlist **stack_b,
 	return (cheapest);
 }
 
-static unsigned long	_calccost(t_cdlist **stack_a, t_cdlist **stack_b,
-							t_cdlist *current_a)
+static unsigned long	calccost(
+	t_cdlist **stack_a,
+	t_cdlist **stack_b,
+	t_cdlist *current_a)
 {
 	t_cdlist	*target_b;
 	int			moves_a;

@@ -6,27 +6,48 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:16:02 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/21 18:38:00 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/30 20:01:15 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../include/push_swap.h"
-#include "../../../../lib/ft_printf/ft_printf.h"
+#include "push_swap.h"
 
-static t_cdlist	*_findbiggest(t_cdlist **stack_b, size_t run);
-static void		_findtarget_des(t_cdlist *current_a, t_cdlist **stack_b,
+static t_cdlist	*findbiggest(t_cdlist **stack_b, size_t run);
+static void		findtarget_des(t_cdlist *current_a, t_cdlist **stack_b,
 					t_cdlist *biggest, t_cdlist *smallest);
-static void		_findtarget_asc(t_cdlist *current_a, t_cdlist **stack_b,
+static void		findtarget_asc(t_cdlist *current_a, t_cdlist **stack_b,
 					t_cdlist *biggest, t_cdlist *smallest);
 
 /**
- * @brief Finds the following/previous node in `stack_b` for the nodes in
- * `stack_a`.
+ * @brief Finds optimal target positions for elements during insertion sort.
  *
- * @note This function gives a value to the target data in `s_push_swap`.
+ * @param stack_a Pointer to the source stack containing elements to move.
+ * @param stack_b Pointer to the destination stack where elements will be
+ *                inserted.
+ * @param order The sorting order (ORDER_ASCENDING or ORDER_DESCENDING).
+ * @param run The run identifier for elements to process.
+ *
+ * @details
+ * Critical function for efficient insertion sort in large stacks:
+ *
+ * 1. **Target Finding**: For each element in the specified run, finds the
+ *    optimal insertion position in stack_b to maintain sorted order
+ *
+ * 2. **Order-Specific Logic**:
+ *    - Descending: Finds position where element fits in descending sequence
+ *    - Ascending: Finds position where element fits in ascending sequence
+ *
+ * 3. **Optimization**: Uses biggest/smallest elements as reference points
+ *    to minimize search time and operation count
+ *
+ * The target information is stored in each node's target field for later
+ * use in cost calculation and movement optimization.
  */
-void	ps_findtargets(t_cdlist **stack_a, t_cdlist **stack_b, int order,
-			size_t run)
+void	ps_findtargets(
+	t_cdlist **stack_a,
+	t_cdlist **stack_b,
+	int order,
+	size_t run)
 {
 	t_cdlist	*current_a;
 	t_cdlist	*biggest;
@@ -35,7 +56,7 @@ void	ps_findtargets(t_cdlist **stack_a, t_cdlist **stack_b, int order,
 	if (!*stack_b || ft_cdlstsize(*stack_b) == 1)
 		return ;
 	current_a = *stack_a;
-	biggest = _findbiggest(stack_b, run);
+	biggest = findbiggest(stack_b, run);
 	if (order == ORDER_DESCENDING)
 		smallest = biggest->previous;
 	else
@@ -45,9 +66,9 @@ void	ps_findtargets(t_cdlist **stack_a, t_cdlist **stack_b, int order,
 		if (ps_data(current_a)->run == run)
 		{
 			if (order == ORDER_DESCENDING)
-				_findtarget_des(current_a, stack_b, biggest, smallest);
+				findtarget_des(current_a, stack_b, biggest, smallest);
 			else
-				_findtarget_asc(current_a, stack_b, biggest, smallest);
+				findtarget_asc(current_a, stack_b, biggest, smallest);
 		}
 		current_a = current_a->next;
 		if (current_a == *stack_a)
@@ -55,10 +76,9 @@ void	ps_findtargets(t_cdlist **stack_a, t_cdlist **stack_b, int order,
 	}
 }
 
-/**
- *
- */
-static t_cdlist	*_findbiggest(t_cdlist **stack_b, size_t run)
+static t_cdlist	*findbiggest(
+	t_cdlist **stack_b,
+	size_t run)
 {
 	t_cdlist	*biggest;
 	t_cdlist	*current_b;
@@ -75,11 +95,11 @@ static t_cdlist	*_findbiggest(t_cdlist **stack_b, size_t run)
 	return (biggest);
 }
 
-/**
- * Comment
- */
-static void	_findtarget_des(t_cdlist *current_a, t_cdlist **stack_b,
-				t_cdlist *biggest, t_cdlist *smallest)
+static void	findtarget_des(
+	t_cdlist *current_a,
+	t_cdlist **stack_b,
+	t_cdlist *biggest,
+	t_cdlist *smallest)
 {
 	if (ps_data(current_a)->num > ps_data(biggest)->num
 		|| ps_data(current_a)->num < ps_data(smallest)->num)
@@ -98,8 +118,11 @@ static void	_findtarget_des(t_cdlist *current_a, t_cdlist **stack_b,
 	}
 }
 
-static void	_findtarget_asc(t_cdlist *current_a, t_cdlist **stack_b,
-				t_cdlist *biggest, t_cdlist *smallest)
+static void	findtarget_asc(
+	t_cdlist *current_a,
+	t_cdlist **stack_b,
+	t_cdlist *biggest,
+	t_cdlist *smallest)
 {
 	if (ps_data(current_a)->num > ps_data(biggest)->num
 		|| ps_data(current_a)->num < ps_data(smallest)->num)

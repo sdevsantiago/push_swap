@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_twosort.c                                       :+:      :+:    :+:   */
+/*   ps_stacksize.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 13:30:16 by sede-san          #+#    #+#             */
-/*   Updated: 2025/08/30 19:52:54 by sede-san         ###   ########.fr       */
+/*   Created: 2025/08/30 19:42:40 by sede-san          #+#    #+#             */
+/*   Updated: 2025/08/30 20:00:40 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /**
- * @brief Sorts a two-element stack.
+ * @brief Gets the total size of a stack.
  *
- * @param stack_a Pointer to the stack containing two elements.
+ * @param stack Pointer to the stack.
+ *
+ * @return Number of elements in the stack.
  *
  * @details
- * For a 2-element stack, simply swap the elements if needed.
- * This is the most efficient approach requiring at most 1 operation.
- * The function always performs the swap operation as it's called only
- * when the stack is not already sorted.
+ * Uses the index of the last element + 1 to quickly determine stack size
+ * without iteration. More efficient than counting nodes.
  */
-void	ps_twosort(
-	t_cdlist **stack_a)
+inline size_t	ps_stacksize(
+	t_cdlist **stack)
 {
-	sa(stack_a, 1);
+	return (ps_data(ft_cdlstlast(*stack))->index + 1);
 }

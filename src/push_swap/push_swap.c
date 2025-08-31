@@ -6,17 +6,33 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:23:37 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/23 02:31:14 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/31 01:28:16 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/push_swap.h"
-#include "../../lib/Libft/libft.h"
-#include "../../lib/ft_printf/ft_printf.h"
+#include "push_swap.h"
 
-void	push_swap(t_cdlist **stack_a, t_cdlist **stack_b);
+static void	push_swap(t_cdlist **stack_a, t_cdlist **stack_b);
 
-int	main(int argc, char const *argv[])
+/**
+ * @brief Main function that initializes and sorts the stack.
+ *
+ * @param argc Argument count from command line.
+ * @param argv Array of strings containing the numbers to sort.
+ *
+ * @return EXIT_SUCCESS if sorting completed successfully, EXIT_FAILURE on
+ *         error.
+ *
+ * @details This function:
+ * 1. Validates arguments (exits if no arguments provided)
+ * 2. Fills stack_a with parsed and validated numbers
+ * 3. Checks if already sorted (returns early if sorted)
+ * 4. Calls push_swap algorithm to sort the stack
+ * 5. Cleans up allocated memory before exiting
+ */
+int	main(
+	int argc,
+	char const *argv[])
 {
 	t_cdlist	*stack_a;
 	t_cdlist	*stack_b;
@@ -25,7 +41,7 @@ int	main(int argc, char const *argv[])
 		return (EXIT_FAILURE);
 	stack_a = ps_fillstack(argv);
 	if (!stack_a)
-		return (ft_putstr_fd(ERROR_MESSAGE, STDERR_FILENO), EXIT_FAILURE);
+		return (ft_eputendl(ERROR_MESSAGE), EXIT_FAILURE);
 	if (ps_issorted(&stack_a) == ORDER_ASCENDING)
 		return (ft_cdlstclear(&stack_a, free), EXIT_SUCCESS);
 	stack_b = NULL;
@@ -36,10 +52,24 @@ int	main(int argc, char const *argv[])
 }
 
 /**
- * @brief Sorts a stack of numbers in ascending order.
- * @attention Numbers must be unique.
+ * @brief Sorts a stack of numbers in ascending order using the optimal
+ *        algorithm.
+ *
+ * @param stack_a Pointer to the main stack containing numbers to sort.
+ * @param stack_b Pointer to the auxiliary stack (initially empty).
+ *
+ * @details Selects the appropriate sorting algorithm based on stack size:
+ * - 2 elements: Simple swap if needed
+ * - 3 elements: Optimized 3-element sort (max 2 operations)
+ * - 4 elements: Move smallest to top, then 3-sort
+ * - 5 elements: Move 2 smallest to stack_b, then 3-sort and merge
+ * - >5 elements: Timsort-inspired algorithm with runs and merging
+ *
+ * @attention Numbers must be unique integers within INT_MIN to INT_MAX range.
  */
-void	push_swap(t_cdlist **stack_a, t_cdlist **stack_b)
+static void	push_swap(
+	t_cdlist **stack_a,
+	t_cdlist **stack_b)
 {
 	size_t	size_a;
 

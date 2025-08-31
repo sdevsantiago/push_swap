@@ -6,23 +6,48 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:02:45 by sede-san          #+#    #+#             */
-/*   Updated: 2025/04/23 02:36:51 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/08/30 19:52:49 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/push_swap.h"
-#include "../../../lib/ft_printf/ft_printf.h"
+#include "push_swap.h"
 
-static void		_assignruns(t_cdlist **stack);
-static t_cdlist	*_expandruns(t_cdlist **stack_a, t_cdlist *run_last,
+static void		assignruns(t_cdlist **stack);
+static t_cdlist	*expandruns(t_cdlist **stack_a, t_cdlist *run_last,
 					unsigned long run, int run_order);
 
-void	ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b)
+/**
+ * @brief Sorts large stacks using a Timsort-inspired algorithm.
+ *
+ * @param stack_a Pointer to the main stack to sort.
+ * @param stack_b Pointer to the auxiliary stack.
+ *
+ * @details
+ * Advanced sorting algorithm for stacks > 5 elements inspired by Timsort:
+ *
+ * 1. **Run Assignment**: Divides stack into runs of THRESHOLD size
+ *                        (110 elements)
+ * 2. **Run Expansion**: Extends runs by identifying natural
+ *                       ascending/descending sequences
+ * 3. **Iterative Processing**: Alternates between descending and ascending
+ *                              order processing
+ * 4. **Insertion Sort**: Uses insertion sort to move run elements to stack_b
+ *                        in order
+ * 5. **Merge Sort**: Merges sorted runs back to stack_a
+ * 6. **Repeat**: Continues until entire stack is sorted in ascending order
+ *
+ * The alternating order ensures efficient merging and minimizes total
+ * operations. This algorithm performs well on large datasets and takes
+ * advantage of existing order.
+ */
+void	ps_timsort(
+	t_cdlist **stack_a,
+	t_cdlist **stack_b)
 {
 	size_t	run;
 	int		order;
 
-	_assignruns(stack_a);
+	assignruns(stack_a);
 	order = ORDER_DESCENDING;
 	while (ps_issorted(stack_a) != ORDER_ASCENDING)
 	{
@@ -39,13 +64,8 @@ void	ps_timsort(t_cdlist **stack_a, t_cdlist **stack_b)
 	}
 }
 
-/**
- * @brief Assigns a run to each node in `stack_a`.
- * @param stack_a The initial stack before any modifications.
- * @details
- * @note This function should be executed one time only.
- */
-static void	_assignruns(t_cdlist **stack_a)
+static void	assignruns(
+	t_cdlist **stack_a)
 {
 	t_cdlist	*current;
 	t_cdlist	*run_start;
@@ -67,15 +87,18 @@ static void	_assignruns(t_cdlist **stack_a)
 				return ;
 		}
 		order = ps_issorted_run(&run_start, run);
-		current = _expandruns(stack_a, current, run, order);
+		current = expandruns(stack_a, current, run, order);
 		if (current == *stack_a)
 			return ;
 		run++;
 	}
 }
 
-static t_cdlist	*_expandruns(t_cdlist **stack_a, t_cdlist *run_last,
-							unsigned long run, int run_order)
+static t_cdlist	*expandruns(
+	t_cdlist **stack_a,
+	t_cdlist *run_last,
+	unsigned long run,
+	int run_order)
 {
 	t_cdlist	*current;
 
